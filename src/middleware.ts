@@ -1,22 +1,9 @@
-import { auth } from '@/lib/auth'
-import { NextResponse } from 'next/server'
+import NextAuth from 'next-auth'
+import { authConfig } from './auth.config'
 
-const protectedRoutes = ['/dashboard', '/saved']
-
-export default auth((req) => {
-  const isProtected = protectedRoutes.some((route) =>
-    req.nextUrl.pathname.startsWith(route)
-  )
-
-  if (isProtected && !req.auth) {
-    const loginUrl = new URL('/login', req.url)
-    loginUrl.searchParams.set('callbackUrl', req.nextUrl.pathname)
-    return NextResponse.redirect(loginUrl)
-  }
-
-  return NextResponse.next()
-})
+// Use only the edge-compatible config — no DB, no pg, no Node.js-only modules.
+export default NextAuth(authConfig).auth
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)'],
 }
