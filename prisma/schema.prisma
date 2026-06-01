@@ -1,0 +1,224 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Auth Models ───────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  province      String?
+  matricYear    Int?
+  apsScore      Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts          Account[]
+  sessions          Session[]
+  savedBursaries    SavedBursary[]
+  savedLearnerships SavedLearnership[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ─── Core Models ───────────────────────────────────────────────────────────────
+
+model Institution {
+  id                   String          @id @default(cuid())
+  name                 String
+  slug                 String          @unique
+  type                 InstitutionType
+  provinces            String[]
+  city                 String?
+  website              String?
+  phone                String?
+  email                String?
+  description          String?         @db.Text
+  logoUrl              String?
+  nsfasAccredited      Boolean         @default(false)
+  applicationOpenDate  DateTime?
+  applicationCloseDate DateTime?
+  featured             Boolean         @default(false)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  qualifications Qualification[]
+}
+
+model Qualification {
+  id             String            @id @default(cuid())
+  name           String
+  slug           String            @unique
+  institutionId  String
+  nqfLevel       Int
+  durationMonths Int
+  type           QualificationType
+  minApsScore    Int?
+  annualCostMin  Int?
+  annualCostMax  Int?
+  fieldOfStudy   String
+  description    String?           @db.Text
+  subjectReqs    Json?
+  nsfasCovered   Boolean           @default(false)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  institution Institution @relation(fields: [institutionId], references: [id])
+}
+
+model Learnership {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  provider       String
+  seta           String?
+  nqfLevel       Int
+  stipendMin     Int?
+  stipendMax     Int?
+  durationMonths Int
+  deadline       DateTime?
+  applicationUrl String?
+  provinces      String[]
+  isNational     Boolean       @default(false)
+  fieldOfStudy   String?
+  sector         String?
+  description    String?       @db.Text
+  requirements   String?       @db.Text
+  status         ListingStatus @default(OPEN)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  saved SavedLearnership[]
+}
+
+model Bursary {
+  id                 String    @id @default(cuid())
+  name               String
+  slug               String    @unique
+  provider           String
+  fieldsOfStudy      String[]
+  amountDescription  String?
+  deadline           DateTime?
+  applicationUrl     String?
+  eligibilityNotes   String?   @db.Text
+  institutionTypeReq String?
+  isNsfas            Boolean   @default(false)
+  isActive           Boolean   @default(true)
+  description        String?   @db.Text
+  logoUrl            String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  saved SavedBursary[]
+}
+
+model CareerPath {
+  id            String      @id @default(cuid())
+  title         String
+  slug          String      @unique
+  fieldOfStudy  String
+  sector        String
+  salaryMin     Int?
+  salaryMax     Int?
+  demandLevel   DemandLevel
+  description   String?     @db.Text
+  requiredQuals Json?
+  icon          String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model SavedBursary {
+  userId    String
+  bursaryId String
+  savedAt   DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bursary Bursary @relation(fields: [bursaryId], references: [id], onDelete: Cascade)
+
+  @@id([userId, bursaryId])
+}
+
+model SavedLearnership {
+  userId        String
+  learnershipId String
+  savedAt       DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  learnership Learnership @relation(fields: [learnershipId], references: [id], onDelete: Cascade)
+
+  @@id([userId, learnershipId])
+}
+
+// ─── Enums ─────────────────────────────────────────────────────────────────────
+
+enum InstitutionType {
+  UNIVERSITY
+  TVET
+  PRIVATE_COLLEGE
+  DISTANCE_LEARNING
+  TRAINING_PROVIDER
+}
+
+enum QualificationType {
+  DEGREE
+  DIPLOMA
+  CERTIFICATE
+  NCV
+  NATED
+  SHORT_COURSE
+  OCCUPATIONAL_CERT
+}
+
+enum ListingStatus {
+  OPEN
+  CLOSED
+  UPCOMING
+}
+
+enum DemandLevel {
+  CRITICAL
+  HIGH
+  MODERATE
+  LOW
+}
