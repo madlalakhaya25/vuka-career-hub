@@ -1,85 +1,23 @@
 import type { Metadata } from 'next'
 import { Clock, MapPin, DollarSign, CheckCircle, ArrowRight, Briefcase, BookOpen, Building2 } from 'lucide-react'
+import { prisma } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: 'Learnerships 2025/2026 — All SETA Learnerships South Africa',
   description: 'Browse current learnerships in South Africa. Free training + monthly stipend. Updated regularly.',
 }
 
-const learnerships = [
-  {
-    title: 'Software Development Learnership',
-    seta: 'MICT SETA', sector: 'Information Technology',
-    nqfLevel: 5, stipendMin: 3500, stipendMax: 5500, durationMonths: 12,
-    deadline: '2025-09-30', provinces: ['National'], isNational: true, status: 'OPEN',
-    requirements: 'Grade 12 with Mathematics',
-    description: 'Learn software development, databases, and systems analysis. Placed with IT companies.',
-    icon: '💻', accentColor: 'from-blue-500/20 to-blue-600/5', borderColor: 'border-blue-500/20',
-  },
-  {
-    title: 'Electrical Trade Learnership',
-    seta: 'MERSETA', sector: 'Engineering',
-    nqfLevel: 3, stipendMin: 3000, stipendMax: 7000, durationMonths: 18,
-    deadline: '2025-08-31', provinces: ['Gauteng', 'KwaZulu-Natal', 'Western Cape'], isNational: false, status: 'OPEN',
-    requirements: 'Grade 12 with Mathematics and Physical Science',
-    description: 'Become a qualified electrician. Classroom theory + hands-on training towards Red Seal.',
-    icon: '⚡', accentColor: 'from-amber-500/20 to-amber-600/5', borderColor: 'border-amber-500/20',
-  },
-  {
-    title: 'Business Administration Learnership',
-    seta: 'Services SETA', sector: 'Business & Commerce',
-    nqfLevel: 4, stipendMin: 3000, stipendMax: 4500, durationMonths: 12,
-    deadline: '2025-10-15', provinces: ['National'], isNational: true, status: 'OPEN',
-    requirements: 'Grade 12',
-    description: 'Business administration, customer service, and office management skills.',
-    icon: '📋', accentColor: 'from-purple-500/20 to-purple-600/5', borderColor: 'border-purple-500/20',
-  },
-  {
-    title: 'Solar PV Installation Learnership',
-    seta: 'EWSETA', sector: 'Renewable Energy',
-    nqfLevel: 3, stipendMin: 3000, stipendMax: 5000, durationMonths: 12,
-    deadline: '2025-11-30', provinces: ['Limpopo', 'Gauteng', 'Free State'], isNational: false, status: 'OPEN',
-    requirements: 'Grade 12 with Mathematics or Technical subjects',
-    description: 'Install and maintain solar PV systems. One of SA\'s fastest-growing sectors.',
-    icon: '☀️', accentColor: 'from-orange-500/20 to-orange-600/5', borderColor: 'border-orange-500/20',
-  },
-  {
-    title: 'Auxiliary Nursing Learnership',
-    seta: 'HWSETA', sector: 'Healthcare',
-    nqfLevel: 3, stipendMin: 2800, stipendMax: 4000, durationMonths: 12,
-    deadline: '2025-09-15', provinces: ['National'], isNational: true, status: 'OPEN',
-    requirements: 'Grade 12 — Life Sciences preferred',
-    description: 'Assist professional nurses in hospitals and clinics. Strong employment prospects.',
-    icon: '🏥', accentColor: 'from-red-500/15 to-red-600/5', borderColor: 'border-red-500/20',
-  },
-  {
-    title: 'Digital Marketing Learnership',
-    seta: 'MICT SETA', sector: 'Marketing & Media',
-    nqfLevel: 4, stipendMin: 3000, stipendMax: 4500, durationMonths: 12,
-    deadline: '2025-10-31', provinces: ['National'], isNational: true, status: 'OPEN',
-    requirements: 'Grade 12',
-    description: 'Social media, SEO, content creation, and digital advertising. Real client campaigns.',
-    icon: '📱', accentColor: 'from-pink-500/15 to-pink-600/5', borderColor: 'border-pink-500/20',
-  },
-  {
-    title: 'Boilermaking Learnership',
-    seta: 'MERSETA', sector: 'Engineering',
-    nqfLevel: 3, stipendMin: 3000, stipendMax: 5000, durationMonths: 18,
-    deadline: '2025-07-31', provinces: ['Gauteng', 'Mpumalanga', 'KwaZulu-Natal'], isNational: false, status: 'OPEN',
-    requirements: 'Grade 10 minimum, Grade 12 preferred',
-    description: 'Fabricate and repair boilers and structural steel. Critical skills shortage.',
-    icon: '⚙️', accentColor: 'from-slate-500/20 to-slate-600/5', borderColor: 'border-slate-500/20',
-  },
-  {
-    title: 'Accounting & Finance Learnership',
-    seta: 'FASSET', sector: 'Finance',
-    nqfLevel: 4, stipendMin: 3500, stipendMax: 5000, durationMonths: 12,
-    deadline: '2025-08-31', provinces: ['National'], isNational: true, status: 'OPEN',
-    requirements: 'Grade 12 with Accounting or Mathematics',
-    description: 'Bookkeeping, payroll, and financial administration. Entry into the finance profession.',
-    icon: '💰', accentColor: 'from-green-500/15 to-green-600/5', borderColor: 'border-green-500/20',
-  },
-]
+const sectorStyles: Record<string, { accentColor: string; borderColor: string }> = {
+  'Information Technology': { accentColor: 'from-blue-500/20 to-blue-600/5', borderColor: 'border-blue-500/20' },
+  'Engineering': { accentColor: 'from-amber-500/20 to-amber-600/5', borderColor: 'border-amber-500/20' },
+  'Business & Commerce': { accentColor: 'from-purple-500/20 to-purple-600/5', borderColor: 'border-purple-500/20' },
+  'Renewable Energy': { accentColor: 'from-orange-500/20 to-orange-600/5', borderColor: 'border-orange-500/20' },
+  'Healthcare': { accentColor: 'from-red-500/15 to-red-600/5', borderColor: 'border-red-500/20' },
+  'Marketing & Media': { accentColor: 'from-pink-500/15 to-pink-600/5', borderColor: 'border-pink-500/20' },
+  'Finance': { accentColor: 'from-green-500/15 to-green-600/5', borderColor: 'border-green-500/20' },
+}
+
+const fallbackStyle = { accentColor: 'from-slate-500/20 to-slate-600/5', borderColor: 'border-slate-500/20' }
 
 const setas = [
   { name: 'MICT SETA', sector: 'IT & Communications', icon: '💻', count: 45 },
@@ -92,14 +30,21 @@ const setas = [
   { name: 'FASSET', sector: 'Finance', icon: '💰', count: 22 },
 ]
 
-function daysUntil(d: string) {
-  return Math.ceil((new Date(d).getTime() - Date.now()) / 86400000)
+function daysUntil(d: Date) {
+  return Math.ceil((d.getTime() - Date.now()) / 86400000)
 }
-function fmt(d: string) {
-  return new Date(d).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })
+function fmt(d: Date) {
+  return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-export default function LearnershipPage() {
+export default async function LearnershipPage() {
+  const learnerships = await prisma.learnership.findMany({
+    where: { status: { not: 'CLOSED' } },
+    orderBy: [{ status: 'asc' }, { deadline: 'asc' }],
+  })
+
+  const openCount = learnerships.filter((l) => l.status === 'OPEN').length
+
   return (
     <>
       {/* Header */}
@@ -109,7 +54,7 @@ export default function LearnershipPage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-brand mb-6">
               <Briefcase className="h-3.5 w-3.5" />
-              Updated June 2025 — {learnerships.length} open learnerships
+              Updated June 2025 — {openCount} open learnerships
             </div>
             <h1 className="text-5xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
               Learnerships
@@ -167,7 +112,7 @@ export default function LearnershipPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-extrabold text-dark">
-              {learnerships.length} open right now
+              {openCount} open right now
             </h2>
             <div className="filter-chips">
               {['All', 'IT', 'Engineering', 'Healthcare', 'Finance', 'Energy'].map((f) => (
@@ -187,39 +132,51 @@ export default function LearnershipPage() {
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {learnerships.map((l) => {
-              const days = daysUntil(l.deadline)
-              const urgent = days <= 30
+              const style = sectorStyles[l.sector ?? ''] ?? fallbackStyle
+              const days = l.deadline ? daysUntil(l.deadline) : null
+              const urgent = days !== null && days <= 30 && days > 0
+
+              const statusLabel = l.status === 'OPEN' ? 'Open' : l.status === 'UPCOMING' ? 'Upcoming' : 'Closed'
+              const statusCls = l.status === 'OPEN'
+                ? 'bg-green-100 text-green-700 border-green-200'
+                : l.status === 'UPCOMING'
+                ? 'bg-blue-100 text-blue-700 border-blue-200'
+                : 'bg-slate-100 text-slate-500 border-slate-200'
 
               return (
                 <div
-                  key={l.title}
-                  className={`group relative bg-gradient-to-br ${l.accentColor} border ${l.borderColor} rounded-2xl p-6 card-hover overflow-hidden`}
+                  key={l.id}
+                  className={`group relative bg-gradient-to-br ${style.accentColor} border ${style.borderColor} rounded-2xl p-6 card-hover overflow-hidden`}
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm shrink-0">
-                      {l.icon}
+                      {l.icon ?? '📋'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <h3 className="font-extrabold text-dark text-base leading-tight">{l.title}</h3>
-                        <span className="shrink-0 text-xs bg-green-100 text-green-700 border border-green-200 px-2.5 py-0.5 rounded-full font-semibold">
-                          Open
+                        <span className={`shrink-0 text-xs border px-2.5 py-0.5 rounded-full font-semibold ${statusCls}`}>
+                          {statusLabel}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-xs mb-3">
-                        <span className="font-semibold text-orange-600">{l.seta}</span>
-                        <span className="text-slate-300">·</span>
-                        <span className="text-slate-500">{l.sector}</span>
+                        {l.seta && <span className="font-semibold text-orange-600">{l.seta}</span>}
+                        {l.seta && l.sector && <span className="text-slate-300">·</span>}
+                        {l.sector && <span className="text-slate-500">{l.sector}</span>}
                         <span className="text-slate-300">·</span>
                         <span className="text-slate-500">NQF {l.nqfLevel}</span>
                       </div>
-                      <p className="text-sm text-slate-600 leading-relaxed mb-4">{l.description}</p>
+                      {l.description && (
+                        <p className="text-sm text-slate-600 leading-relaxed mb-4">{l.description}</p>
+                      )}
 
                       <div className="flex flex-wrap gap-3 mb-4">
-                        <div className="salary-pill rounded-xl px-3 py-1.5 flex items-center gap-1.5 text-xs">
-                          <DollarSign className="h-3.5 w-3.5" />
-                          <span className="font-bold">R{l.stipendMin.toLocaleString()}–R{l.stipendMax.toLocaleString()}/mo</span>
-                        </div>
+                        {l.stipendMin && l.stipendMax && (
+                          <div className="salary-pill rounded-xl px-3 py-1.5 flex items-center gap-1.5 text-xs">
+                            <DollarSign className="h-3.5 w-3.5" />
+                            <span className="font-bold">R{l.stipendMin.toLocaleString()}–R{l.stipendMax.toLocaleString()}/mo</span>
+                          </div>
+                        )}
                         <div className="flex items-center gap-1.5 text-xs text-slate-500 bg-slate-100 rounded-xl px-3 py-1.5">
                           <Clock className="h-3.5 w-3.5" />
                           {l.durationMonths} months
@@ -230,19 +187,23 @@ export default function LearnershipPage() {
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-2 text-xs text-slate-500 bg-white/60 rounded-xl px-3 py-2 mb-4">
-                        <CheckCircle className="h-3.5 w-3.5 text-green-500 shrink-0 mt-0.5" />
-                        {l.requirements}
-                      </div>
+                      {l.requirements && (
+                        <div className="flex items-start gap-2 text-xs text-slate-500 bg-white/60 rounded-xl px-3 py-2 mb-4">
+                          <CheckCircle className="h-3.5 w-3.5 text-green-500 shrink-0 mt-0.5" />
+                          {l.requirements}
+                        </div>
+                      )}
 
                       <div className="flex items-center justify-between">
                         <div className={`flex items-center gap-1.5 text-xs font-semibold ${urgent ? 'text-red-600' : 'text-slate-500'}`}>
                           {urgent && <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />}
                           <Clock className="h-3.5 w-3.5" />
-                          {urgent ? `${days} days left!` : fmt(l.deadline)}
+                          {days === null ? 'Rolling' : urgent ? `${days} days left!` : fmt(l.deadline!)}
                         </div>
                         <a
-                          href="#"
+                          href={l.applicationUrl ?? '#'}
+                          target={l.applicationUrl ? '_blank' : undefined}
+                          rel={l.applicationUrl ? 'noopener noreferrer' : undefined}
                           className="group/btn flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
                         >
                           Apply Now

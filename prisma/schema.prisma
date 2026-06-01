@@ -16,6 +16,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  isAdmin       Boolean   @default(false)
   province      String?
   matricYear    Int?
   apsScore      Int?
@@ -75,9 +76,11 @@ model Institution {
   email                String?
   description          String?         @db.Text
   logoUrl              String?
+  rank                 String?
   nsfasAccredited      Boolean         @default(false)
   applicationOpenDate  DateTime?
   applicationCloseDate DateTime?
+  appCloseDisplay      String?
   featured             Boolean         @default(false)
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @updatedAt
@@ -124,6 +127,7 @@ model Learnership {
   sector         String?
   description    String?       @db.Text
   requirements   String?       @db.Text
+  icon           String?
   status         ListingStatus @default(OPEN)
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
@@ -132,40 +136,46 @@ model Learnership {
 }
 
 model Bursary {
-  id                 String    @id @default(cuid())
-  name               String
-  slug               String    @unique
-  provider           String
-  fieldsOfStudy      String[]
-  amountDescription  String?
-  deadline           DateTime?
-  applicationUrl     String?
-  eligibilityNotes   String?   @db.Text
-  institutionTypeReq String?
-  isNsfas            Boolean   @default(false)
-  isActive           Boolean   @default(true)
-  description        String?   @db.Text
-  logoUrl            String?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  id                String    @id @default(cuid())
+  name              String
+  slug              String    @unique
+  fullName          String?
+  provider          String
+  category          String?
+  icon              String?
+  featured          Boolean   @default(false)
+  fieldsOfStudy     String[]
+  amountDescription String?
+  deadline          DateTime?
+  applicationUrl    String?
+  eligibilityNotes  String?   @db.Text
+  isNsfas           Boolean   @default(false)
+  isActive          Boolean   @default(true)
+  description       String?   @db.Text
+  logoUrl           String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   saved SavedBursary[]
 }
 
 model CareerPath {
-  id            String      @id @default(cuid())
-  title         String
-  slug          String      @unique
-  fieldOfStudy  String
-  sector        String
-  salaryMin     Int?
-  salaryMax     Int?
-  demandLevel   DemandLevel
-  description   String?     @db.Text
-  requiredQuals Json?
-  icon          String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id           String      @id @default(cuid())
+  title        String
+  slug         String      @unique
+  sector       String
+  fieldOfStudy String
+  icon         String?
+  demandLevel  DemandLevel
+  salaryEntry  Int?
+  salaryMid    Int?
+  salarySenior Int?
+  description  String?     @db.Text
+  outlook      String?
+  skills       String[]
+  pathways     String[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
 
 model SavedBursary {

@@ -9,6 +9,12 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
+      const isAdmin = !!(auth?.user as { isAdmin?: boolean } | undefined)?.isAdmin
+
+      if (nextUrl.pathname.startsWith('/admin')) {
+        return isAdmin
+      }
+
       const protectedPaths = ['/dashboard', '/saved']
       const isProtected = protectedPaths.some((p) =>
         nextUrl.pathname.startsWith(p)

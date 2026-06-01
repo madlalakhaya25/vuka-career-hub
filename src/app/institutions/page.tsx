@@ -1,35 +1,18 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { GraduationCap, MapPin, Globe, CheckCircle, BookOpen, Award, Building2 } from 'lucide-react'
+import { prisma } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: 'Institutions — TVET Colleges, Universities & Private Colleges SA',
   description: 'Browse all 50 TVET colleges, 26 public universities, and top private colleges in South Africa.',
 }
 
-const institutions = [
-  { name: 'University of Cape Town (UCT)', type: 'UNIVERSITY', provinces: ['Western Cape'], city: 'Cape Town', website: 'https://www.uct.ac.za', nsfas: true, desc: "Africa's top-ranked university. Strong in law, medicine, commerce, and engineering.", appClose: 'Oct 2025', featured: true, rank: '1st in Africa' },
-  { name: 'University of the Witwatersrand (Wits)', type: 'UNIVERSITY', provinces: ['Gauteng'], city: 'Johannesburg', website: 'https://www.wits.ac.za', nsfas: true, desc: 'Premier research university in Johannesburg. Renowned for medicine, engineering, and law.', appClose: 'Sep 2025', featured: true, rank: 'Top 5 SA' },
-  { name: 'University of Pretoria (UP)', type: 'UNIVERSITY', provinces: ['Gauteng'], city: 'Pretoria', website: 'https://www.up.ac.za', nsfas: true, desc: "One of SA's largest universities. Strong in veterinary science, law, and engineering.", appClose: 'Oct 2025', featured: false, rank: undefined },
-  { name: 'Stellenbosch University', type: 'UNIVERSITY', provinces: ['Western Cape'], city: 'Stellenbosch', website: 'https://www.sun.ac.za', nsfas: true, desc: 'Top research university. Strong in agriculture, data science, and engineering.', appClose: 'Sep 2025', featured: false, rank: undefined },
-  { name: 'UKZN', type: 'UNIVERSITY', provinces: ['KwaZulu-Natal'], city: 'Durban / PMB', website: 'https://www.ukzn.ac.za', nsfas: true, desc: 'Two campuses in Durban and Pietermaritzburg. Well known for healthcare, engineering, and agriculture.', appClose: 'Sep 2025', featured: false, rank: undefined },
-  { name: 'UNISA', type: 'DISTANCE_LEARNING', provinces: ['National'], city: 'Distance learning', website: 'https://www.unisa.ac.za', nsfas: true, desc: "Africa's largest university. Fully online — study from anywhere in SA or the world.", appClose: 'Oct 2025', featured: true, rank: 'Largest in Africa' },
-  { name: 'Tshwane University of Technology (TUT)', type: 'UNIVERSITY', provinces: ['Gauteng'], city: 'Pretoria', website: 'https://www.tut.ac.za', nsfas: true, desc: "One of SA's largest universities by student numbers. Practical, hands-on degrees in IT, engineering, and business.", appClose: 'Oct 2025', featured: false, rank: undefined },
-  { name: 'Durban University of Technology (DUT)', type: 'UNIVERSITY', provinces: ['KwaZulu-Natal'], city: 'Durban', website: 'https://www.dut.ac.za', nsfas: true, desc: 'Strong engineering, IT, management, and health sciences in KZN.', appClose: 'Oct 2025', featured: false, rank: undefined },
-  { name: 'Tshwane North TVET College', type: 'TVET', provinces: ['Gauteng'], city: 'Pretoria', website: 'https://www.tnc.edu.za', nsfas: true, desc: "One of Gauteng's largest TVET colleges. NCV and NATED in engineering, IT, and business.", appClose: 'Jan 2026', featured: true, rank: undefined },
-  { name: 'Northlink TVET College', type: 'TVET', provinces: ['Western Cape'], city: 'Bellville', website: 'https://www.northlink.edu.za', nsfas: true, desc: 'Leading TVET college in the Western Cape. Trades, IT, business, and hospitality.', appClose: 'Jan 2026', featured: false, rank: undefined },
-  { name: 'Majuba TVET College', type: 'TVET', provinces: ['KwaZulu-Natal'], city: 'Newcastle', website: 'https://www.majuba.edu.za', nsfas: true, desc: 'Well-regarded TVET college in the Newcastle area. Strong in engineering trades, IT, and business.', appClose: 'Jan 2026', featured: false, rank: undefined },
-  { name: 'West Coast TVET College', type: 'TVET', provinces: ['Western Cape'], city: 'Vredenburg', website: 'https://www.westcoastcollege.co.za', nsfas: true, desc: 'Main TVET option along the West Coast. Offers NCV and NATED in trades, business, and engineering.', appClose: 'Jan 2026', featured: false, rank: undefined },
-  { name: 'Rosebank College (IIE)', type: 'PRIVATE_COLLEGE', provinces: ['Gauteng', 'Western Cape', 'KwaZulu-Natal'], city: 'Multiple campuses', website: 'https://www.rosebankcollege.co.za', nsfas: false, desc: 'Affordable IIE private college with flexible payment plans. Business, IT, and media.', appClose: 'Rolling', featured: true, rank: undefined },
-  { name: 'Boston City Campus', type: 'PRIVATE_COLLEGE', provinces: ['Gauteng', 'Western Cape', 'Eastern Cape'], city: 'Multiple campuses', website: 'https://www.boston.co.za', nsfas: false, desc: "Been around since 1974 — one of SA's longest-running private colleges. Practical diplomas and certificates you can finish quickly.", appClose: 'Rolling', featured: false, rank: undefined },
-  { name: 'Regenesys Business School', type: 'PRIVATE_COLLEGE', provinces: ['Gauteng'], city: 'Sandton', website: 'https://www.regenesys.net', nsfas: false, desc: 'Business and management school. MBAs, BCom, and professional development.', appClose: 'Rolling', featured: false, rank: undefined },
-]
-
 const typeCfg: Record<string, { label: string; pill: string; accent: string; icon: typeof GraduationCap }> = {
   UNIVERSITY: { label: 'University', pill: 'bg-blue-50 text-blue-600 border-blue-200', accent: 'from-blue-500 to-indigo-500', icon: GraduationCap },
   TVET: { label: 'TVET College', pill: 'bg-green-50 text-green-600 border-green-200', accent: 'from-green-500 to-emerald-500', icon: BookOpen },
   PRIVATE_COLLEGE: { label: 'Private College', pill: 'bg-purple-50 text-purple-600 border-purple-200', accent: 'from-purple-500 to-violet-500', icon: Award },
   DISTANCE_LEARNING: { label: 'Distance Learning', pill: 'bg-orange-50 text-orange-600 border-orange-200', accent: 'from-orange-500 to-brand', icon: Building2 },
+  TRAINING_PROVIDER: { label: 'Training Provider', pill: 'bg-slate-50 text-slate-600 border-slate-200', accent: 'from-slate-500 to-zinc-400', icon: BookOpen },
 }
 
 const groups = [
@@ -38,7 +21,11 @@ const groups = [
   { key: 'PRIVATE_COLLEGE', title: 'Private Colleges & Distance', sub: 'Flexible options (NSFAS does not cover these)' },
 ]
 
-export default function InstitutionsPage() {
+export default async function InstitutionsPage() {
+  const institutions = await prisma.institution.findMany({
+    orderBy: [{ featured: 'desc' }, { name: 'asc' }],
+  })
+
   return (
     <>
       {/* Header */}
@@ -96,9 +83,10 @@ export default function InstitutionsPage() {
         {groups.map((group) => {
           const list = institutions.filter((i) =>
             group.key === 'PRIVATE_COLLEGE'
-              ? i.type === 'PRIVATE_COLLEGE' || i.type === 'DISTANCE_LEARNING'
+              ? i.type === 'PRIVATE_COLLEGE' || i.type === 'DISTANCE_LEARNING' || i.type === 'TRAINING_PROVIDER'
               : i.type === group.key
           )
+          if (list.length === 0) return null
           const cfg = typeCfg[group.key === 'PRIVATE_COLLEGE' ? 'PRIVATE_COLLEGE' : group.key]
           const Icon = cfg.icon
 
@@ -117,11 +105,11 @@ export default function InstitutionsPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {list.map((inst) => {
-                    const t = typeCfg[inst.type]
+                    const t = typeCfg[inst.type] ?? typeCfg.PRIVATE_COLLEGE
                     const TIcon = t.icon
                     return (
                       <div
-                        key={inst.name}
+                        key={inst.id}
                         className={`group bg-white rounded-2xl border card-hover overflow-hidden ${
                           inst.featured ? 'border-orange-300' : 'border-slate-200'
                         }`}
@@ -130,7 +118,7 @@ export default function InstitutionsPage() {
                         <div className="p-5">
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex items-center gap-2">
-                              {inst.nsfas && (
+                              {inst.nsfasAccredited && (
                                 <span className="text-xs bg-green-50 text-green-600 border border-green-200 px-2 py-0.5 rounded-full font-semibold">
                                   NSFAS ✓
                                 </span>
@@ -153,25 +141,35 @@ export default function InstitutionsPage() {
                             {t.label}
                           </span>
 
-                          <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-3">
-                            <MapPin className="h-3.5 w-3.5 shrink-0" />
-                            {inst.city}
-                            {inst.provinces[0] !== 'National' && ` · ${inst.provinces[0]}`}
-                          </div>
+                          {inst.city && (
+                            <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-3">
+                              <MapPin className="h-3.5 w-3.5 shrink-0" />
+                              {inst.city}
+                              {inst.provinces[0] && inst.provinces[0] !== 'National' && ` · ${inst.provinces[0]}`}
+                            </div>
+                          )}
 
-                          <p className="text-xs text-slate-500 leading-relaxed mb-4">{inst.desc}</p>
+                          {inst.description && (
+                            <p className="text-xs text-slate-500 leading-relaxed mb-4">{inst.description}</p>
+                          )}
 
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-slate-400">Apply by: {inst.appClose}</span>
-                            <a
-                              href={inst.website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1 text-xs font-bold text-orange-500 hover:text-orange-600 transition-colors"
-                            >
-                              <Globe className="h-3.5 w-3.5" />
-                              Website
-                            </a>
+                            <span className="text-xs text-slate-400">
+                              Apply by: {inst.appCloseDisplay ?? (inst.applicationCloseDate
+                                ? inst.applicationCloseDate.toLocaleDateString('en-ZA', { month: 'short', year: 'numeric' })
+                                : 'Rolling')}
+                            </span>
+                            {inst.website && (
+                              <a
+                                href={inst.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1 text-xs font-bold text-orange-500 hover:text-orange-600 transition-colors"
+                              >
+                                <Globe className="h-3.5 w-3.5" />
+                                Website
+                              </a>
+                            )}
                           </div>
                         </div>
                       </div>
