@@ -224,3 +224,120 @@ export async function deleteCareer(id: string) {
   revalidatePath('/careers')
   revalidatePath('/admin/careers')
 }
+
+// ─── Scraper Inbox ─────────────────────────────────────────────────────────────
+
+type ScrapedData = {
+  provider?: string
+  seta?: string
+  sector?: string
+  nqfLevel?: number
+  stipendMin?: number
+  stipendMax?: number
+  durationMonths?: number
+  deadline?: string
+  applicationUrl?: string
+  provinces?: string[]
+  isNational?: boolean
+  requirements?: string
+  description?: string
+  icon?: string
+  // bursary-specific
+  category?: string
+  amountDescription?: string
+  fieldsOfStudy?: string[]
+  eligibilityNotes?: string
+}
+
+export async function approveScrapedListing(id: string) {
+  await requireAdmin()
+
+  const scraped = await prisma.scrapedListing.findUnique({ where: { id } })
+  if (!scraped) throw new Error('Scraped listing not found')
+
+  const d = scraped.data as ScrapedData
+
+  if (scraped.type === 'LEARNERSHIP') {
+    const title = scraped.title
+    let slug = slugify(title)
+    // Ensure unique slug
+    const existing = await prisma.learnership.findUnique({ where: { slug } })
+    if (existing) slug = `${slug}-${id.slice(-4)}`
+
+    await prisma.learnership.create({
+      data: {
+        slug,
+        title,
+        provider: d.provider ?? scraped.provider ?? 'Unknown',
+        seta: d.seta ?? null,
+        sector: d.sector ?? null,
+        fieldOfStudy: d.sector ?? null,
+        nqfLevel: d.nqfLevel ?? 3,
+        stipendMin: d.stipendMin ?? null,
+        stipendMax: d.stipendMax ?? null,
+        durationMonths: d.durationMonths ?? 12,
+        deadline: d.deadline ? new Date(d.deadline) : null,
+        applicationUrl: d.applicationUrl ?? scraped.sourceUrl,
+        description: d.description ?? null,
+        requirements: d.requirements ?? null,
+        provinces: d.provinces ?? [],
+        isNational: d.isNational ?? true,
+        icon: d.icon ?? null,
+        status: 'OPEN',
+      },
+    })
+
+    revalidatePath('/learnerships')
+    revalidatePath('/admin/learnerships')
+  } else if (scraped.type === 'BURSARY') {
+    const name = scraped.title
+    let slug = slugify(name)
+    const existing = await prisma.bursary.findUnique({ where: { slug } })
+    if (existing) slug = `${slug}-${id.slice(-4)}`
+
+    await prisma.bursary.create({
+      data: {
+        slug,
+        name,
+        provider: d.provider ?? scraped.provider ?? 'Unknown',
+        category: d.category ?? null,
+        amountDescription: d.amountDescription ?? null,
+        deadline: d.deadline ? new Date(d.deadline) : null,
+        applicationUrl: d.applicationUrl ?? scraped.sourceUrl,
+        description: d.description ?? null,
+        eligibilityNotes: d.eligibilityNotes ?? null,
+        fieldsOfStudy: d.fieldsOfStudy ?? [],
+        isNsfas: scraped.source.includes('nsfas'),
+        isActive: true,
+      },
+    })
+
+    revalidatePath('/bursaries')
+    revalidatePath('/admin/bursaries')
+  }
+
+  await prisma.scrapedListing.update({
+    where: { id },
+    data: { status: 'APPROVED', reviewedAt: new Date() },
+  })
+
+  revalidatePath('/admin/inbox')
+}
+
+export async function rejectScrapedListing(id: string) {
+  await requireAdmin()
+  await prisma.scrapedListing.update({
+    where: { id },
+    data: { status: 'REJECTED', reviewedAt: new Date() },
+  })
+  revalidatePath('/admin/inbox')
+}
+
+export async function rejectAllScrapedListings(source?: string) {
+  await requireAdmin()
+  await prisma.scrapedListing.updateMany({
+    where: { status: 'PENDING', ...(source ? { source } : {}) },
+    data: { status: 'REJECTED', reviewedAt: new Date() },
+  })
+  revalidatePath('/admin/inbox')
+}

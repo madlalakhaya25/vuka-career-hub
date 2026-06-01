@@ -200,6 +200,22 @@ model SavedLearnership {
   @@id([userId, learnershipId])
 }
 
+model ScrapedListing {
+  id         String       @id @default(cuid())
+  type       ScrapedType
+  source     String
+  sourceUrl  String
+  externalId String       @unique
+  title      String
+  provider   String?
+  data       Json
+  status     ScrapeStatus @default(PENDING)
+  createdAt  DateTime     @default(now())
+  reviewedAt DateTime?
+
+  @@index([status])
+}
+
 // ─── Enums ─────────────────────────────────────────────────────────────────────
 
 enum InstitutionType {
@@ -231,4 +247,15 @@ enum DemandLevel {
   HIGH
   MODERATE
   LOW
+}
+
+enum ScrapedType {
+  LEARNERSHIP
+  BURSARY
+}
+
+enum ScrapeStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }

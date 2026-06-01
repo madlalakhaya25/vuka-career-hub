@@ -1,0 +1,50 @@
+name: Weekly Data Scraper
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC (08:00 SAST)
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (print results, do not save)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  scrape:
+    name: Scrape SA learnerships & bursaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run scraper
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            npx tsx scripts/scrape.ts --dry-run
+          else
+            npx tsx scripts/scrape.ts
+          fi
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NODE_ENV: production
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "Scraper failed — check logs and verify site selectors still match"
