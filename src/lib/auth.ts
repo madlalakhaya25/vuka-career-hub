@@ -6,6 +6,12 @@ import bcrypt from 'bcryptjs'
 import { z } from 'zod'
 import { authConfig } from '../auth.config'
 
+const ADMIN_EMAILS = new Set([
+  'madlalakhaya@yahoo.com',
+  'madlalakhaya@gmail.com',
+  'khaya@botlhale.ai',
+])
+
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
@@ -32,7 +38,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         const isValid = await bcrypt.compare(parsed.data.password, user.password)
         if (!isValid) return null
 
-        return { id: user.id, email: user.email, name: user.name, image: user.image, isAdmin: user.isAdmin }
+        const isAdmin = user.isAdmin || ADMIN_EMAILS.has(user.email ?? '')
+        return { id: user.id, email: user.email, name: user.name, image: user.image, isAdmin }
       },
     }),
   ],
@@ -41,7 +48,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.isAdmin = (user as { isAdmin?: boolean }).isAdmin ?? false
+        token.isAdmin = (user as { isAdmin?: boolean }).isAdmin ?? ADMIN_EMAILS.has(token.email as string ?? '')
+      }
+      // Re-check on every token refresh in case email is in ADMIN_EMAILS
+      if (!token.isAdmin && ADMIN_EMAILS.has(token.email as string ?? '')) {
+        token.isAdmin = true
       }
       return token
     },
