@@ -21,7 +21,7 @@ export default async function DashboardPage() {
             Welcome back, {firstName} 👋
           </h1>
           <p className="text-slate-500 mt-1">
-            Track your saved opportunities and get personalised recommendations.
+            Here&apos;s your saved learnerships, bursaries, and career picks.
           </p>
         </div>
 

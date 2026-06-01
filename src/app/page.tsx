@@ -114,7 +114,7 @@ export default function HomePage() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs font-semibold text-white/80 mb-8">
                 <Flame className="h-3.5 w-3.5 text-brand" />
-                2025/2026 Updated — SA&apos;s most complete career guide
+                2025/2026 Updated — Free for every South African student
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
               </div>
 
@@ -328,8 +328,8 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-2xl font-extrabold text-white mb-2">Career Quiz</h3>
                 <p className="text-orange-100 text-sm leading-relaxed">
-                  15 questions about your interests and strengths → discover your top
-                  career matches in 3 minutes.
+                  10 questions about what you like and how you work → see which careers
+                  suit you best, in under 3 minutes.
                 </p>
               </div>
               <div className="relative flex items-center gap-2 text-sm font-bold text-white mt-4 group-hover:gap-3 transition-all">

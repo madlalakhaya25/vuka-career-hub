@@ -4,7 +4,7 @@ import { CareerQuizClient } from './CareerQuizClient'
 
 export const metadata: Metadata = {
   title: 'Career Quiz — Discover Your Ideal Career Path',
-  description: 'Answer 15 questions about your interests and strengths to find your ideal career in South Africa.',
+  description: 'Answer 10 questions about your interests and strengths to find your ideal career in South Africa.',
 }
 
 export default function CareerQuizPage() {

@@ -112,7 +112,7 @@ const careerProfiles = [
     id: 'it',
     title: 'Information Technology',
     careers: ['Software Developer', 'Cybersecurity Analyst', 'Data Scientist', 'Cloud Engineer'],
-    description: 'You\'re analytical and love technology. The IT sector has the highest salary growth and most remote work opportunities in SA.',
+    description: 'You\'re drawn to tech and problem-solving. IT is one of the best-paying sectors in SA right now — and a lot of these jobs let you work from home.',
     salaryRange: 'R25K–R110K/month',
     demand: 'CRITICAL',
     icon: '💻',
@@ -123,7 +123,7 @@ const careerProfiles = [
     id: 'trades',
     title: 'Artisan Trades',
     careers: ['Electrician', 'Plumber', 'Boilermaker', 'Solar PV Technician'],
-    description: 'You love working with your hands and solving physical problems. Artisans are in critical shortage in SA — employers compete for good ones.',
+    description: 'You like working with your hands and seeing the results of what you build or fix. SA doesn\'t have enough artisans — good ones are in high demand and earn well.',
     salaryRange: 'R9K–R52K/month',
     demand: 'CRITICAL',
     icon: '⚡',
@@ -134,7 +134,7 @@ const careerProfiles = [
     id: 'healthcare',
     title: 'Healthcare',
     careers: ['Registered Nurse', 'Paramedic', 'Pharmacy Assistant', 'Community Health Worker'],
-    description: 'You\'re caring and want to make a real difference in people\'s lives. Healthcare jobs are secure, meaningful, and growing.',
+    description: 'You want to help people and make a difference you can actually see. Healthcare has strong job security, real career growth, and work that matters.',
     salaryRange: 'R14K–R60K/month',
     demand: 'HIGH',
     icon: '🏥',
@@ -145,7 +145,7 @@ const careerProfiles = [
     id: 'business',
     title: 'Business & Finance',
     careers: ['Accountant', 'Financial Analyst', 'HR Manager', 'Business Administrator'],
-    description: 'You\'re organised, numbers-smart, and see opportunities others miss. Finance and business skills are needed in every sector.',
+    description: 'You\'re good with numbers, planning, and making things run smoothly. Every company needs finance and business people — in every industry there is.',
     salaryRange: 'R18K–R80K/month',
     demand: 'HIGH',
     icon: '📊',
@@ -156,7 +156,7 @@ const careerProfiles = [
     id: 'renewable',
     title: 'Renewable Energy',
     careers: ['Solar PV Installer', 'Energy Efficiency Consultant', 'Renewable Energy Technician'],
-    description: 'South Africa\'s energy crisis has created one of the fastest-growing job markets in the country. Get in early.',
+    description: 'Load shedding changed everything. Solar installers and energy technicians are in high demand right now, and this sector is only going to keep growing.',
     salaryRange: 'R8K–R35K/month',
     demand: 'CRITICAL',
     icon: '☀️',
@@ -167,7 +167,7 @@ const careerProfiles = [
     id: 'entrepreneurship',
     title: 'Entrepreneurship',
     careers: ['Own Business', 'Franchise Owner', 'Tech Startup', 'Service Business'],
-    description: 'You want to be your own boss and build something. NYDA has R2.5 billion in funding specifically for young entrepreneurs aged 18–35.',
+    description: 'You\'d rather build something of your own than work for someone else. NYDA has R2.5 billion in funding set aside just for young South Africans looking to start a business.',
     salaryRange: 'Unlimited potential',
     demand: 'HIGH',
     icon: '🚀',
@@ -233,8 +233,7 @@ export function CareerQuizClient() {
             <div className="text-4xl mb-3">🎯</div>
             <h2 className="text-3xl font-extrabold text-slate-900">Your Career Matches</h2>
             <p className="text-slate-500 mt-2">
-              Based on your answers, here are the career paths that best match your
-              personality and interests.
+              Based on what you told us, these are the careers that suit you best.
             </p>
           </div>
 

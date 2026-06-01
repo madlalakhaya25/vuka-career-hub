@@ -45,7 +45,7 @@ const products = [
     title: 'R2.5 Billion Youth Fund',
     amount: 'R750K – R2,000,000',
     amountSub: 'Launched November 2025',
-    desc: "The biggest NYDA funding announcement in history. Focus: agriculture, renewable energy, industrial development, property.",
+    desc: "New in 2025 — the largest fund NYDA has ever launched. Focused on agriculture, solar energy, manufacturing, and property development.",
     eligibility: ['Age 18–35', 'SA citizen', 'Business in priority sectors', 'Strong business plan'],
     includes: ['Large-scale capital', 'Business development support', 'Sector mentorship', 'Job creation focus'],
     url: 'https://www.nyda.gov.za',
@@ -55,7 +55,7 @@ const products = [
 ]
 
 const programmes = [
-  { name: 'Website Dev & Digital Marketing', partner: 'Accenture + Moses Kotane Institute', status: 'Open 2025', desc: 'Fully funded digital skills training including CV writing, personal branding, and interview prep.' },
+  { name: 'Website Dev & Digital Marketing', partner: 'Accenture + Moses Kotane Institute', status: 'Open 2025', desc: 'Free digital skills training — learn to build websites, run online ads, write a CV, and prepare for interviews.' },
   { name: 'Data Analytics Training', partner: 'NYDA Digital Skills Unit', status: 'Open 2025', desc: 'Learn data analytics, Excel, and business intelligence tools aligned with current job market.' },
   { name: 'National Youth Service (NYS)', partner: 'Government', status: 'Expanding 2025/26', desc: 'Community service programme expanding to 40,000 participants. Stipend + skills development included.' },
   { name: 'Creative Economy Programme', partner: 'Various partners', status: 'Rolling', desc: 'Support for youth in music, film, events, and design. Includes business development support.' },
@@ -79,8 +79,8 @@ export default function NYDAPage() {
                 <span className="gradient-text">Youth Funding</span>
               </h1>
               <p className="text-lg text-white/60 mb-8">
-                Most South Africans aged 18–35 don&apos;t know what NYDA offers. Grants,
-                loans, vouchers, and now a R2.5 billion fund — all specifically for young people.
+                Most people aged 18–35 have no idea what NYDA actually offers. Grants you
+                don&apos;t pay back, low-interest loans, free training, and now a R2.5 billion fund — all for young South Africans.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
@@ -127,7 +127,7 @@ export default function NYDAPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-extrabold text-dark">NYDA Funding Products</h2>
             <p className="text-slate-500 mt-2 max-w-xl mx-auto">
-              Different products for different stages of your entrepreneurship journey.
+              Whether you&apos;re just starting out or already running a business, there&apos;s something here for you.
             </p>
           </div>
 

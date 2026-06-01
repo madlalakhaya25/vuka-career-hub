@@ -300,7 +300,7 @@ export default function CareersPage() {
           <Flame className="h-10 w-10 text-brand mx-auto mb-4" />
           <h2 className="text-2xl font-extrabold text-dark mb-3">Not sure which suits you?</h2>
           <p className="text-slate-500 mb-6">
-            Answer 15 quick questions about your interests to discover your top career matches.
+            Answer 10 quick questions about your interests and we&apos;ll show you which careers fit you best.
           </p>
           <Link
             href="/tools/career-quiz"

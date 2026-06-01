@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     default: 'Vuka Career Hub — Your Post-Matric Guide',
   },
   description:
-    "South Africa's most comprehensive guide to TVET colleges, universities, learnerships, bursaries, and in-demand careers. Find your path after matric.",
+    "Free guides on TVET colleges, universities, learnerships, bursaries, and careers in South Africa. Everything you need after matric, in one place.",
   keywords: [
     'TVET colleges', 'learnerships 2025', 'bursaries South Africa',
     'what to study after matric', 'APS score calculator', 'NSFAS', 'NYDA',
