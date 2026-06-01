@@ -101,12 +101,12 @@ export default function HomePage() {
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen mesh-bg dot-pattern flex items-center overflow-hidden pt-16">
+      <section className="relative min-h-screen mesh-bg dot-pattern flex items-center overflow-hidden pt-16 overflow-x-hidden">
         {/* Decorative blobs */}
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-brand/8 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-indigo-500/6 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
             {/* Left — Content */}
@@ -119,7 +119,7 @@ export default function HomePage() {
               </div>
 
               {/* Headline */}
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] tracking-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.05] tracking-tight">
                 Your future
                 <br />
                 starts{' '}
@@ -133,10 +133,10 @@ export default function HomePage() {
               </p>
 
               {/* CTAs */}
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
                   href="/tools/aps-calculator"
-                  className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 gradient-orange text-white font-semibold rounded-2xl transition-all hover:opacity-90 glow-orange text-sm"
+                  className="group inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 gradient-orange text-white font-semibold rounded-2xl transition-all hover:opacity-90 glow-orange text-sm min-h-[44px]"
                 >
                   <Calculator className="h-4.5 w-4.5" />
                   Calculate APS Score
@@ -144,7 +144,7 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="/tools/career-quiz"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 glass text-white font-semibold rounded-2xl hover:bg-white/12 transition-all text-sm"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 glass text-white font-semibold rounded-2xl hover:bg-white/12 transition-all text-sm min-h-[44px]"
                 >
                   <Zap className="h-4 w-4 text-brand" />
                   Take Career Quiz
@@ -413,7 +413,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mesh-bg dot-pattern rounded-3xl overflow-hidden border border-white/8">
             <div className="grid grid-cols-1 lg:grid-cols-5">
-              <div className="lg:col-span-3 p-8 sm:p-12">
+              <div className="lg:col-span-3 p-6 sm:p-10 lg:p-12">
                 <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-orange-400 mb-6">
                   <Star className="h-3.5 w-3.5 fill-orange-400" />
                   Announced November 2025
@@ -454,7 +454,7 @@ export default function HomePage() {
 
               <div className="hidden lg:flex lg:col-span-2 items-center justify-center p-12">
                 <div className="text-center">
-                  <div className="text-8xl mb-4 animate-float-slow">🚀</div>
+                  <div className="text-6xl sm:text-8xl mb-4 animate-float-slow">🚀</div>
                   <div className="text-white/80 font-bold text-lg">Start Your Business</div>
                   <div className="text-white/40 text-sm mt-1 max-w-40 mx-auto">
                     Funding + mentorship + business support
@@ -526,24 +526,24 @@ export default function HomePage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand/15 rounded-full blur-3xl pointer-events-none" />
         <div className="relative max-w-2xl mx-auto px-4 text-center">
           <div className="text-6xl mb-6 animate-float">🔥</div>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
             Ready to{' '}
             <span className="gradient-text">Vuka</span>?
           </h2>
-          <p className="text-white/60 text-lg mb-10">
+          <p className="text-white/60 text-base sm:text-lg mb-8 sm:mb-10">
             Create a free account to save learnerships, track bursary deadlines,
             and get matched to opportunities that fit your profile.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/register"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 gradient-orange text-white font-bold rounded-2xl hover:opacity-90 transition-opacity glow-orange text-base"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 gradient-orange text-white font-bold rounded-2xl hover:opacity-90 transition-opacity glow-orange text-sm sm:text-base min-h-[44px]"
             >
               Create Free Account <ArrowRight className="h-5 w-5" />
             </Link>
             <Link
               href="/learnerships"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 glass text-white font-semibold rounded-2xl hover:bg-white/12 transition-all text-base"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 glass text-white font-semibold rounded-2xl hover:bg-white/12 transition-all text-sm sm:text-base min-h-[44px]"
             >
               Browse Learnerships
             </Link>

@@ -9,6 +9,13 @@ const geist = Geist({
   subsets: ['latin'],
 })
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#080d1a',
+}
+
 export const metadata: Metadata = {
   title: {
     template: '%s | Vuka Career Hub',
@@ -31,7 +38,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-ZA" className={`${geist.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased bg-white">
+      <body className="min-h-full flex flex-col antialiased bg-white overflow-x-hidden">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

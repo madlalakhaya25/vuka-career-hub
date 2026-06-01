@@ -21,7 +21,7 @@ export function RegisterForm() {
           type="text"
           autoComplete="name"
           required
-          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[48px]"
           placeholder="Sipho Dlamini"
         />
       </div>
@@ -35,7 +35,7 @@ export function RegisterForm() {
           type="email"
           autoComplete="email"
           required
-          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[48px]"
           placeholder="you@example.com"
         />
       </div>
@@ -50,7 +50,7 @@ export function RegisterForm() {
           autoComplete="new-password"
           required
           minLength={8}
-          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[48px]"
           placeholder="At least 8 characters"
         />
       </div>
@@ -61,7 +61,7 @@ export function RegisterForm() {
         <select
           id="province"
           name="province"
-          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
+          className="w-full px-4 py-3 border border-slate-300 rounded-xl text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white min-h-[48px]"
         >
           <option value="">Select province</option>
           {[

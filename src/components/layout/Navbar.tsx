@@ -155,7 +155,7 @@ export function Navbar() {
 
         {/* Drawer */}
         <div
-          className={`absolute right-0 top-0 bottom-0 w-80 bg-slate-950 border-l border-white/10 transition-transform duration-300 ${
+          className={`absolute right-0 top-0 bottom-0 w-full max-w-xs bg-slate-950 border-l border-white/10 transition-transform duration-300 ${
             mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >

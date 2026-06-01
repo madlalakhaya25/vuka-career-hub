@@ -153,7 +153,7 @@ export function APSCalculatorClient() {
                               [subject.id]: e.target.value,
                             }))
                           }
-                          className="w-28 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                          className="w-24 sm:w-28 px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[44px]"
                         />
                         {hasValue && (
                           <span className={`text-xs font-medium ${mark >= 50 ? 'text-green-600' : 'text-red-600'}`}>
@@ -215,7 +215,7 @@ export function APSCalculatorClient() {
 
           {/* APS guide */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm sticky top-20">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm lg:sticky lg:top-20">
               <h3 className="font-bold text-slate-900 mb-4">APS Points Guide</h3>
               <div className="space-y-2">
                 {[

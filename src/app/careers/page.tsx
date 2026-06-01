@@ -155,7 +155,7 @@ export default function CareersPage() {
   return (
     <>
       {/* Header */}
-      <section className="relative mesh-bg dot-pattern pt-32 pb-16 overflow-hidden">
+      <section className="relative mesh-bg dot-pattern pt-24 sm:pt-32 pb-16 overflow-hidden">
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-red-500/8 rounded-full blur-3xl" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
@@ -252,7 +252,7 @@ export default function CareersPage() {
                       <div className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-3">
                         Monthly salary range
                       </div>
-                      <div className="grid grid-cols-3 gap-2 text-center">
+                      <div className="grid grid-cols-3 gap-1.5 text-center">
                         {[
                           { l: 'Entry', v: c.salaryEntry },
                           { l: 'Mid-level', v: c.salaryMid },

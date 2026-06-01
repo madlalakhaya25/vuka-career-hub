@@ -103,7 +103,7 @@ export default function LearnershipPage() {
   return (
     <>
       {/* Header */}
-      <section className="relative mesh-bg dot-pattern pt-32 pb-16 overflow-hidden">
+      <section className="relative mesh-bg dot-pattern pt-24 sm:pt-32 pb-16 overflow-hidden">
         <div className="absolute top-1/3 right-0 w-64 h-64 bg-brand/10 rounded-full blur-3xl" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
@@ -121,7 +121,7 @@ export default function LearnershipPage() {
               a nationally recognised qualification. No experience required.
             </p>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 { icon: BookOpen, v: '100% Free', s: 'No fees ever' },
                 { icon: DollarSign, v: 'R2K–R8K/mo', s: 'Monthly stipend' },

@@ -340,14 +340,14 @@ export function CareerQuizClient() {
         </div>
 
         {/* Question card */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-8">
           <h2 className="text-xl font-bold text-slate-900 mb-6">{question.question}</h2>
           <div className="space-y-3">
             {question.options.map((option, idx) => (
               <button
                 key={idx}
                 onClick={() => handleAnswer(option.traits)}
-                className="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-orange-400 hover:bg-orange-50 transition-all text-slate-700 font-medium text-sm"
+                className="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-orange-400 hover:bg-orange-50 transition-all text-slate-700 font-medium text-sm min-h-[52px] active:bg-orange-50"
               >
                 {option.text}
               </button>

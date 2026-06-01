@@ -65,10 +65,10 @@ export default function NYDAPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative mesh-bg dot-pattern pt-32 pb-20 overflow-hidden">
+      <section className="relative mesh-bg dot-pattern pt-24 sm:pt-32 pb-16 overflow-hidden">
         <div className="absolute top-1/3 right-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 glass border border-orange-500/30 rounded-full px-4 py-1.5 text-xs font-semibold text-orange-400 mb-6">
                 <Star className="h-3.5 w-3.5 fill-orange-400" />
@@ -135,7 +135,7 @@ export default function NYDAPage() {
             {products.map((p) => {
               const Icon = p.icon
               return (
-                <div key={p.title} className={`bg-gradient-to-br ${p.accent} border ${p.border} rounded-2xl p-7 card-hover relative overflow-hidden`}>
+                <div key={p.title} className={`bg-gradient-to-br ${p.accent} border ${p.border} rounded-2xl p-5 sm:p-7 card-hover relative overflow-hidden`}>
                   {p.badge && (
                     <div className="absolute top-4 right-4 text-xs font-bold text-purple-400 bg-purple-500/15 border border-purple-500/25 px-2.5 py-1 rounded-full">
                       {p.badge}
@@ -155,7 +155,7 @@ export default function NYDAPage() {
 
                   <p className="text-sm text-slate-600 leading-relaxed mb-5">{p.desc}</p>
 
-                  <div className="grid grid-cols-2 gap-4 mb-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
                     <div>
                       <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Eligibility</div>
                       {p.eligibility.map((e) => (
