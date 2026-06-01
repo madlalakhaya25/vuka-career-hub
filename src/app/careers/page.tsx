@@ -15,18 +15,18 @@ const careers = [
     desc: 'Design, build, and maintain software. One of the highest-paying careers in SA with remote work opportunities for international companies.',
     skills: ['JavaScript', 'Python', 'React', 'Node.js', 'SQL'],
     pathways: ['BSc Computer Science', 'MICT SETA Learnership', 'WeThinkCode_ / HyperionDev Bootcamp'],
-    outlook: 'ICT skills shortage doubled YoY in 2025',
+    outlook: 'ICT skills shortage up 57% YoY — 22% of companies struggled to fill roles in 2025',
     accentFrom: 'from-blue-500', accentTo: 'to-indigo-500',
     bgGlow: 'bg-blue-500/5',
   },
   {
     title: 'Electrician (Artisan)', slug: 'electrician',
     sector: 'Trades', icon: '⚡',
-    demand: 'CRITICAL', salaryEntry: 9100, salaryMid: 25000, salarySenior: 52000,
+    demand: 'CRITICAL', salaryEntry: 17000, salaryMid: 25000, salarySenior: 52000,
     desc: 'Install and repair electrical systems. Red Seal trade with lifelong earning potential — own your business and earn even more.',
     skills: ['Wiring & installations', 'Fault diagnosis', "Wireman's license", 'Safety compliance'],
     pathways: ['TVET N1–N3 + Apprenticeship', 'MERSETA Learnership', 'Trade test → Red Seal'],
-    outlook: 'Artisan shortage doubled to 22% in 2025',
+    outlook: 'Artisan shortage doubled — 22% of companies could not fill artisan roles in 2025',
     accentFrom: 'from-amber-500', accentTo: 'to-yellow-500',
     bgGlow: 'bg-amber-500/5',
   },
@@ -122,7 +122,7 @@ const careers = [
     title: 'Plumber', slug: 'plumber',
     sector: 'Trades', icon: '🔧',
     demand: 'HIGH', salaryEntry: 12750, salaryMid: 21750, salarySenior: 38000,
-    desc: 'Install and repair plumbing and drainage systems. Own a business and earn R381K+/year. Critical shortage in construction.',
+    desc: 'Install and repair plumbing and drainage systems. Critical shortage in construction — self-employed plumbers with a good client base can earn R200K+/year.',
     skills: ['Pipe fitting', 'Drainage systems', 'Gas installation', 'Building regulations'],
     pathways: ['TVET N1 Plumbing', 'Apprenticeship (3–4 years)', 'Trade test → Red Seal'],
     outlook: 'Construction boom driving demand',
@@ -182,9 +182,9 @@ export default function CareersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
             {[
-              { v: '22%', l: 'ICT vacancy rate' },
-              { v: '22%', l: 'Artisan vacancy rate' },
-              { v: '350+', l: 'High-demand occupations' },
+              { v: '22%', l: 'Firms can\'t fill ICT roles' },
+              { v: '22%', l: 'Firms can\'t fill artisan roles' },
+              { v: '350', l: 'High-demand occupations' },
               { v: 'R110K', l: 'Top monthly salary' },
             ].map((s) => (
               <div key={s.l}>

@@ -19,7 +19,7 @@ const learnerships = [
   {
     title: 'Electrical Trade Learnership',
     seta: 'MERSETA', sector: 'Engineering',
-    nqfLevel: 3, stipendMin: 2500, stipendMax: 4000, durationMonths: 18,
+    nqfLevel: 3, stipendMin: 3000, stipendMax: 7000, durationMonths: 18,
     deadline: '2025-08-31', provinces: ['Gauteng', 'KwaZulu-Natal', 'Western Cape'], isNational: false, status: 'OPEN',
     requirements: 'Grade 12 with Mathematics and Physical Science',
     description: 'Become a qualified electrician. Classroom theory + hands-on training towards Red Seal.',
@@ -124,7 +124,7 @@ export default function LearnershipPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 { icon: BookOpen, v: '100% Free', s: 'No fees ever' },
-                { icon: DollarSign, v: 'R2K–R8K/mo', s: 'Monthly stipend' },
+                { icon: DollarSign, v: 'R2.5K–R8K/mo', s: 'Monthly stipend' },
                 { icon: Building2, v: '21 SETAs', s: 'All sectors' },
               ].map((s) => (
                 <div key={s.v} className="glass rounded-2xl p-4 text-center">

@@ -7,7 +7,7 @@ import {
 
 /* ─── Data ──────────────────────────────────────────────────────────────────── */
 const floatingCards = [
-  { icon: '⚡', title: 'Electrician', salary: 'R9K–R52K/mo', tag: 'Critical shortage', color: 'from-amber-500/20 to-amber-600/10', border: 'border-amber-500/20' },
+  { icon: '⚡', title: 'Electrician', salary: 'R17K–R52K/mo', tag: 'Critical shortage', color: 'from-amber-500/20 to-amber-600/10', border: 'border-amber-500/20' },
   { icon: '💻', title: 'Developer', salary: 'R25K–R88K/mo', tag: 'Critical shortage', color: 'from-blue-500/20 to-blue-600/10', border: 'border-blue-500/20' },
   { icon: '☀️', title: 'Solar Tech', salary: 'R8K–R35K/mo', tag: 'Fastest growing', color: 'from-orange-500/20 to-orange-600/10', border: 'border-orange-500/20' },
 ]
@@ -40,7 +40,7 @@ const pathways = [
     title: 'Learnership',
     sub: 'Earn while you learn',
     desc: 'Free SETA-funded training. You work + study and earn a stipend every month.',
-    pros: ['Completely free to you', 'R2K–R8K/month stipend', 'Real work experience'],
+    pros: ['Completely free to you', 'R2.5K–R8K/month stipend', 'Real work experience'],
     cost: 'Free + stipend', duration: '6–18 months', entry: 'Grade 12',
     accent: 'from-orange-500 to-brand',
     pill: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
@@ -61,7 +61,7 @@ const pathways = [
 
 const careers = [
   { icon: '💻', title: 'Software Developer', sector: 'IT', salary: 'R25K–R88K/mo', demand: 'CRITICAL', slug: 'software-developer' },
-  { icon: '⚡', title: 'Electrician', sector: 'Trades', salary: 'R9K–R52K/mo', demand: 'CRITICAL', slug: 'electrician' },
+  { icon: '⚡', title: 'Electrician', sector: 'Trades', salary: 'R17K–R52K/mo', demand: 'CRITICAL', slug: 'electrician' },
   { icon: '☀️', title: 'Solar PV Technician', sector: 'Renewable Energy', salary: 'R8K–R35K/mo', demand: 'HIGH', slug: 'solar-pv-technician' },
   { icon: '📊', title: 'Data Scientist', sector: 'IT', salary: 'R21K–R68K/mo', demand: 'CRITICAL', slug: 'data-scientist' },
   { icon: '🏥', title: 'Registered Nurse', sector: 'Healthcare', salary: 'R15K–R60K/mo', demand: 'HIGH', slug: 'registered-nurse' },
@@ -416,7 +416,7 @@ export default function HomePage() {
               <div className="lg:col-span-3 p-6 sm:p-10 lg:p-12">
                 <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-orange-400 mb-6">
                   <Star className="h-3.5 w-3.5 fill-orange-400" />
-                  Announced November 2025
+                  Announced 31 October 2025
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">
                   NYDA launched a{' '}
@@ -434,7 +434,7 @@ export default function HomePage() {
                   {[
                     { v: 'R1K–R200K', l: 'Standard grants' },
                     { v: 'Up to R2M', l: 'Large-scale fund' },
-                    { v: '6%', l: 'Loan interest rate' },
+                    { v: '<Prime', l: 'Loan interest rate' },
                     { v: '18–35', l: 'Age requirement' },
                   ].map((s) => (
                     <div key={s.l} className="glass rounded-2xl p-4">

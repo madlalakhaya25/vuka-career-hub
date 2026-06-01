@@ -3,16 +3,16 @@ import { Rocket, DollarSign, BookOpen, Phone, Globe, CheckCircle, ArrowRight, St
 
 export const metadata: Metadata = {
   title: 'NYDA — National Youth Development Agency Guide 2025',
-  description: 'Complete NYDA guide. R2.5 billion youth fund, grants up to R200K, business loans at 6% interest. Ages 18–35.',
+  description: 'Complete NYDA guide. R2.5 billion youth fund, grants up to R200K (R250K for agriculture & tech), low-interest loans. Ages 18–35.',
 }
 
 const products = [
   {
     icon: DollarSign, emoji: '💵',
     title: 'NYDA Grant Programme',
-    amount: 'R1,000 – R200,000',
+    amount: 'R1,000 – R200,000 (up to R250,000 for agri & tech)',
     amountSub: 'Non-repayable grant',
-    desc: 'Cash grant + business development support for youth-owned businesses. You do not pay it back.',
+    desc: 'Cash grant + business development support for youth-owned businesses. You do not pay it back. Agriculture and technology projects can qualify for up to R250,000.',
     eligibility: ['Age 18–35', 'South African citizen', 'Annual turnover below R750K', '51% youth-owned business'],
     includes: ['Cash grant (non-repayable)', 'Business mentorship', 'Financial literacy training', 'Market access support'],
     url: 'https://www.nyda.gov.za',
@@ -21,9 +21,9 @@ const products = [
   {
     icon: TrendingUp, emoji: '📈',
     title: 'NYDA Business Loan',
-    amount: '6% interest rate',
-    amountSub: 'Below prime — repayable',
-    desc: 'Low-interest business loan for youth entrepreneurs. Significantly below the commercial prime rate.',
+    amount: 'Below-prime interest rate',
+    amountSub: 'Contact NYDA for current rate',
+    desc: 'Low-interest business loan for youth entrepreneurs. Offered at a concessionary rate below the commercial prime rate — contact NYDA directly for the current figure.',
     eligibility: ['Age 18–35', 'South African citizen', 'Viable business plan', 'Ability to repay'],
     includes: ['Below-prime interest', 'Flexible repayment terms', 'Business advisory services', 'Progress monitoring'],
     url: 'https://www.nyda.gov.za',
@@ -44,8 +44,8 @@ const products = [
     icon: Rocket, emoji: '🚀',
     title: 'R2.5 Billion Youth Fund',
     amount: 'R750K – R2,000,000',
-    amountSub: 'Launched November 2025',
-    desc: "New in 2025 — the largest fund NYDA has ever launched. Focused on agriculture, solar energy, manufacturing, and property development.",
+    amountSub: 'Launched 31 October 2025',
+    desc: "Launched 31 October 2025 — the largest fund NYDA has ever announced. Focused on agriculture, solar energy, manufacturing, and property development. Grants up to R250,000 for qualifying agri and tech projects.",
     eligibility: ['Age 18–35', 'SA citizen', 'Business in priority sectors', 'Strong business plan'],
     includes: ['Large-scale capital', 'Business development support', 'Sector mentorship', 'Job creation focus'],
     url: 'https://www.nyda.gov.za',
@@ -72,7 +72,7 @@ export default function NYDAPage() {
             <div>
               <div className="inline-flex items-center gap-2 glass border border-orange-500/30 rounded-full px-4 py-1.5 text-xs font-semibold text-orange-400 mb-6">
                 <Star className="h-3.5 w-3.5 fill-orange-400" />
-                R2.5 billion fund launched November 2025
+                R2.5 billion fund launched 31 October 2025
               </div>
               <h1 className="text-5xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
                 NYDA<br />
@@ -106,7 +106,7 @@ export default function NYDAPage() {
               {[
                 { v: 'R2.5B', l: 'New youth fund', sub: 'launched 2025' },
                 { v: 'R200K', l: 'Max grant', sub: 'per individual' },
-                { v: '6%', l: 'Loan rate', sub: 'below prime' },
+                { v: '<Prime', l: 'Loan rate', sub: 'below commercial rate' },
                 { v: '18–35', l: 'Age eligible', sub: 'all SA youth' },
               ].map((s) => (
                 <div key={s.l} className="glass rounded-2xl p-5 text-center">
