@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, X, ChevronDown, Flame, ArrowRight, Zap } from 'lucide-react'
+import { Menu, X, ChevronDown, Zap } from 'lucide-react'
+import { VukaMark } from '@/components/VukaMark'
 
 const navLinks = [
   {
@@ -54,11 +55,7 @@ export function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative">
-                <div className="w-8 h-8 rounded-xl gradient-orange flex items-center justify-center glow-orange-sm">
-                  <Flame className="h-4.5 w-4.5 text-white" />
-                </div>
-              </div>
+              <VukaMark size={32} className="rounded-xl glow-orange-sm shrink-0" />
               <span className="font-bold text-lg text-white tracking-tight">
                 Vuka<span className="gradient-text">Career</span>Hub
               </span>
@@ -161,9 +158,7 @@ export function Navbar() {
         >
           <div className="flex items-center justify-between p-4 border-b border-white/10">
             <Link href="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
-              <div className="w-7 h-7 rounded-lg gradient-orange flex items-center justify-center">
-                <Flame className="h-4 w-4 text-white" />
-              </div>
+              <VukaMark size={28} className="rounded-lg shrink-0" />
               <span className="font-bold text-white">VukaCareerHub</span>
             </Link>
             <button

@@ -4,9 +4,9 @@ import { useActionState } from 'react'
 
 type BursaryData = {
   id?: string
-  name?: string
-  fullName?: string
-  provider?: string
+  name?: string | null
+  fullName?: string | null
+  provider?: string | null
   category?: string | null
   icon?: string | null
   featured?: boolean

@@ -1,8 +1,9 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Flame, LayoutDashboard, GraduationCap, Briefcase, TrendingUp, Inbox, ArrowLeft } from 'lucide-react'
+import { LayoutDashboard, GraduationCap, Briefcase, TrendingUp, Inbox, ArrowLeft } from 'lucide-react'
 import { prisma } from '@/lib/db'
+import { VukaMark } from '@/components/VukaMark'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth()
@@ -26,9 +27,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <aside className="w-56 shrink-0 bg-white border-r border-slate-200 flex flex-col">
         <div className="p-4 border-b border-slate-200">
           <Link href="/" className="flex items-center gap-2 text-sm font-bold text-slate-900">
-            <div className="w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center">
-              <Flame className="h-4 w-4 text-white" />
-            </div>
+            <VukaMark size={28} className="rounded-lg shrink-0" />
             Admin Panel
           </Link>
         </div>

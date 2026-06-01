@@ -4,8 +4,8 @@ import { useActionState } from 'react'
 
 type LearnershipData = {
   id?: string
-  title?: string
-  provider?: string
+  title?: string | null
+  provider?: string | null
   seta?: string | null
   sector?: string | null
   fieldOfStudy?: string | null

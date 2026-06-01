@@ -4,9 +4,9 @@ import { useActionState } from 'react'
 
 type CareerData = {
   id?: string
-  title?: string
-  sector?: string
-  fieldOfStudy?: string
+  title?: string | null
+  sector?: string | null
+  fieldOfStudy?: string | null
   icon?: string | null
   demandLevel?: string
   salaryEntry?: number | null
