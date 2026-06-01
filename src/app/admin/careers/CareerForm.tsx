@@ -99,8 +99,8 @@ export function CareerForm({ action, defaultValues: d = {}, submitLabel = 'Save 
   )
 }
 
-function Field({ label, name, defaultValue = '', required, placeholder, type = 'text' }: {
-  label: string; name: string; defaultValue?: string; required?: boolean; placeholder?: string; type?: string
+function Field({ label, name, defaultValue, required, placeholder, type = 'text' }: {
+  label: string; name: string; defaultValue?: string | null; required?: boolean; placeholder?: string; type?: string
 }) {
   return (
     <div>
