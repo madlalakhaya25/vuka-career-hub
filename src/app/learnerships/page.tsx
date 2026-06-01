@@ -7,6 +7,20 @@ export const metadata: Metadata = {
   description: 'Browse current learnerships in South Africa. Free training + monthly stipend. Updated regularly.',
 }
 
+const setaUrls: Record<string, string> = {
+  'MICT SETA': 'https://www.mict.org.za/learnerships',
+  'MERSETA': 'https://www.merseta.org.za/Learnerships',
+  'Services SETA': 'https://www.serviceseta.org.za/learnerships',
+  'HWSETA': 'https://www.hwseta.org.za/learnerships',
+  'EWSETA': 'https://www.ewseta.org.za/learnerships',
+  'FASSET': 'https://www.fasset.org.za/learnerships',
+  'CETA': 'https://www.ceta.org.za/learnerships',
+  'AgriSETA': 'https://www.agriseta.co.za/learnerships',
+  'W&RSETA': 'https://www.wrseta.org.za/learnerships',
+  'TETA': 'https://www.teta.org.za/learnerships',
+  'CHIETA': 'https://www.chieta.org.za/learnerships',
+}
+
 const sectorStyles: Record<string, { accentColor: string; borderColor: string }> = {
   'Information Technology': { accentColor: 'from-blue-500/20 to-blue-600/5', borderColor: 'border-blue-500/20' },
   'Engineering': { accentColor: 'from-amber-500/20 to-amber-600/5', borderColor: 'border-amber-500/20' },
@@ -200,15 +214,22 @@ export default async function LearnershipPage() {
                           <Clock className="h-3.5 w-3.5" />
                           {days === null ? 'Rolling' : urgent ? `${days} days left!` : fmt(l.deadline!)}
                         </div>
-                        <a
-                          href={l.applicationUrl ?? '#'}
-                          target={l.applicationUrl ? '_blank' : undefined}
-                          rel={l.applicationUrl ? 'noopener noreferrer' : undefined}
-                          className="group/btn flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
-                        >
-                          Apply Now
-                          <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
-                        </a>
+                        {(() => {
+                          const url = l.applicationUrl ?? (l.seta ? setaUrls[l.seta] : null)
+                          return url ? (
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group/btn flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
+                            >
+                              Apply Now
+                              <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                            </a>
+                          ) : (
+                            <span className="text-xs text-slate-400 italic">Check SETA website</span>
+                          )
+                        })()}
                       </div>
                     </div>
                   </div>
