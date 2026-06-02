@@ -1,9 +1,12 @@
 import Link from 'next/link'
 import {
   ArrowRight, CheckCircle, ChevronRight, Zap, Calculator,
-  Flame, TrendingUp, Clock, Star, Shield, BookOpen,
+  Flame, TrendingUp, Clock, Star, BookOpen,
   GraduationCap, Award, Building2,
 } from 'lucide-react'
+import { prisma } from '@/lib/db'
+
+export const dynamic = 'force-dynamic'
 
 /* ─── Data ──────────────────────────────────────────────────────────────────── */
 const floatingCards = [
@@ -59,45 +62,37 @@ const pathways = [
   },
 ]
 
-const careers = [
-  { icon: '💻', title: 'Software Developer', sector: 'IT', salary: 'R25K–R88K/mo', demand: 'CRITICAL', slug: 'software-developer' },
-  { icon: '⚡', title: 'Electrician', sector: 'Trades', salary: 'R17K–R52K/mo', demand: 'CRITICAL', slug: 'electrician' },
-  { icon: '☀️', title: 'Solar PV Technician', sector: 'Renewable Energy', salary: 'R8K–R35K/mo', demand: 'HIGH', slug: 'solar-pv-technician' },
-  { icon: '📊', title: 'Data Scientist', sector: 'IT', salary: 'R21K–R68K/mo', demand: 'CRITICAL', slug: 'data-scientist' },
-  { icon: '🏥', title: 'Registered Nurse', sector: 'Healthcare', salary: 'R15K–R60K/mo', demand: 'HIGH', slug: 'registered-nurse' },
-  { icon: '🔒', title: 'Cybersecurity Analyst', sector: 'IT', salary: 'R25K–R100K/mo', demand: 'CRITICAL', slug: 'cybersecurity-analyst' },
-]
-
 const demandCfg: Record<string, { label: string; cls: string; dot: string }> = {
   CRITICAL: { label: 'Critical shortage', cls: 'bg-red-500/10 text-red-400 border-red-500/20', dot: 'bg-red-400 animate-pulse-ring' },
   HIGH: { label: 'High demand', cls: 'bg-orange-500/10 text-orange-400 border-orange-500/20', dot: 'bg-orange-400' },
+  MODERATE: { label: 'Growing demand', cls: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20', dot: 'bg-yellow-400' },
+  LOW: { label: 'Stable demand', cls: 'bg-slate-500/10 text-slate-400 border-slate-500/20', dot: 'bg-slate-400' },
 }
 
-const bursaryHighlights = [
-  {
-    name: 'NSFAS 2026', provider: 'Government', tag: 'Most popular',
-    tagCls: 'bg-green-500/10 text-green-400 border-green-500/20',
-    amount: 'Full tuition + allowances', deadline: '15 Nov 2025',
-    icon: '🎓', urgent: true,
-  },
-  {
-    name: 'Sasol Bursary', provider: 'Corporate', tag: 'Full bursary',
-    tagCls: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-    amount: 'Tuition + accommodation + books', deadline: '31 May 2026',
-    icon: '⚗️', urgent: false,
-  },
-  {
-    name: 'MICT SETA Learnership', provider: 'SETA', tag: 'Free + stipend',
-    tagCls: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-    amount: 'R3.5K–R5.5K/month', deadline: 'Rolling 2025',
-    icon: '💻', urgent: false,
-  },
-]
+const categoryTagCfg: Record<string, { tag: string; tagCls: string }> = {
+  government: { tag: 'Government', tagCls: 'bg-green-500/10 text-green-400 border-green-500/20' },
+  corporate: { tag: 'Corporate', tagCls: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
+  seta: { tag: 'SETA', tagCls: 'bg-orange-500/10 text-orange-400 border-orange-500/20' },
+}
+const fallbackTagCfg = { tag: 'Bursary', tagCls: 'bg-slate-500/10 text-slate-400 border-slate-500/20' }
 
 const trustItems = ['100% Free forever', 'Updated monthly', 'All 9 provinces', 'NYDA & NSFAS info']
 
 /* ─── Page ──────────────────────────────────────────────────────────────────── */
-export default function HomePage() {
+export default async function HomePage() {
+  const [featuredCareers, featuredBursaries] = await Promise.all([
+    prisma.careerPath.findMany({
+      where: { demandLevel: { in: ['CRITICAL', 'HIGH'] } },
+      orderBy: [{ demandLevel: 'asc' }, { title: 'asc' }],
+      take: 6,
+    }),
+    prisma.bursary.findMany({
+      where: { isActive: true, featured: true },
+      orderBy: [{ deadline: 'asc' }],
+      take: 3,
+    }),
+  ])
+
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
@@ -114,7 +109,7 @@ export default function HomePage() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs font-semibold text-white/80 mb-8">
                 <Flame className="h-3.5 w-3.5 text-brand" />
-                2025/2026 Updated, free for every South African student
+                2026/2027 Updated, free for every South African student
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
               </div>
 
@@ -362,13 +357,16 @@ export default function HomePage() {
               href="/careers"
               className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-orange-500 hover:text-orange-600 transition-colors"
             >
-              View all 12 careers <ChevronRight className="h-4 w-4" />
+              View all careers <ChevronRight className="h-4 w-4" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {careers.map((career) => {
-              const d = demandCfg[career.demand]
+            {featuredCareers.map((career) => {
+              const d = demandCfg[career.demandLevel] ?? demandCfg.MODERATE
+              const salary = career.salaryEntry && career.salarySenior
+                ? `R${Math.round(career.salaryEntry / 1000)}K–R${Math.round(career.salarySenior / 1000)}K/mo`
+                : 'See guide'
               return (
                 <Link
                   key={career.slug}
@@ -378,7 +376,7 @@ export default function HomePage() {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-2xl border border-slate-100">
-                        {career.icon}
+                        {career.icon ?? '💼'}
                       </div>
                       <div>
                         <h3 className="font-bold text-dark text-sm group-hover:text-orange-500 transition-colors">
@@ -395,7 +393,7 @@ export default function HomePage() {
 
                   <div className="salary-pill rounded-xl px-4 py-2.5 flex items-center justify-between">
                     <span className="text-xs text-slate-500 font-medium">Monthly salary</span>
-                    <span className="font-extrabold text-emerald-700 text-sm">{career.salary}</span>
+                    <span className="font-extrabold text-emerald-700 text-sm">{salary}</span>
                   </div>
 
                   <div className="mt-3 flex items-center justify-end text-xs font-semibold text-orange-400 group-hover:gap-1 transition-all gap-0.5">
@@ -486,37 +484,49 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {bursaryHighlights.map((b) => (
-              <Link
-                key={b.name}
-                href="/bursaries"
-                className="group bg-white rounded-2xl border border-slate-200 p-6 card-hover"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <span className="text-3xl">{b.icon}</span>
-                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${b.tagCls}`}>
-                    {b.tag}
-                  </span>
-                </div>
-                <h3 className="font-extrabold text-dark text-lg group-hover:text-orange-500 transition-colors">
-                  {b.name}
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5 mb-3">{b.provider}</p>
-                <div className="text-sm font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2 mb-4">
-                  {b.amount}
-                </div>
-                <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                  <Clock className="h-3.5 w-3.5 text-slate-400" />
-                  Deadline: {b.deadline}
-                  {b.urgent && (
-                    <span className="ml-1 text-red-500 font-semibold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-                      Closing soon
+            {featuredBursaries.map((b) => {
+              const tagCfg = categoryTagCfg[b.category ?? ''] ?? fallbackTagCfg
+              const days = b.deadline ? Math.ceil((b.deadline.getTime() - Date.now()) / 86400000) : null
+              const urgent = days !== null && days > 0 && days <= 45
+              const deadlineLabel = days === null
+                ? 'Rolling deadline'
+                : days <= 0
+                ? 'Deadline passed'
+                : b.deadline!.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })
+              return (
+                <Link
+                  key={b.id}
+                  href="/bursaries"
+                  className="group bg-white rounded-2xl border border-slate-200 p-6 card-hover"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <span className="text-3xl">{b.icon ?? '🎓'}</span>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${tagCfg.tagCls}`}>
+                      {tagCfg.tag}
                     </span>
+                  </div>
+                  <h3 className="font-extrabold text-dark text-lg group-hover:text-orange-500 transition-colors">
+                    {b.name}
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5 mb-3">{b.provider}</p>
+                  {b.amountDescription && (
+                    <div className="text-sm font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2 mb-4">
+                      {b.amountDescription}
+                    </div>
                   )}
-                </div>
-              </Link>
-            ))}
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                    <Clock className="h-3.5 w-3.5 text-slate-400" />
+                    {deadlineLabel}
+                    {urgent && (
+                      <span className="ml-1 text-red-500 font-semibold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                        Closing soon
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>

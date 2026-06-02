@@ -5,7 +5,7 @@ import { prisma } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Bursaries South Africa 2025/2026: NSFAS, Corporate & Government',
+  title: 'Bursaries South Africa 2026/2027: NSFAS, Corporate & Government',
   description: 'Find bursaries for South African students. NSFAS, Sasol, Anglo American, Eskom and more.',
 }
 
@@ -42,6 +42,11 @@ export default async function BursariesPage() {
     orderBy: [{ featured: 'desc' }, { name: 'asc' }],
   })
 
+  const nsfas = bursaries.find((b) => b.isNsfas)
+  const nsfasDeadline = nsfas?.deadline
+    ? nsfas.deadline.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })
+    : null
+
   return (
     <>
       {/* Header */}
@@ -51,7 +56,7 @@ export default async function BursariesPage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-green-400 mb-6">
               <GraduationCap className="h-3.5 w-3.5" />
-              {bursaries.length} bursaries listed, updated for 2025/2026
+              {bursaries.length} bursaries listed, updated for 2026/2027
             </div>
             <h1 className="text-5xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
               Bursaries &<br />
@@ -68,7 +73,9 @@ export default async function BursariesPage() {
                 <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shrink-0" />
                 <div>
                   <div className="text-sm font-bold text-white">NSFAS 2026: Applications open</div>
-                  <div className="text-xs text-white/50 mt-0.5">17 Sep – 15 Nov 2025 · nsfas.org.za</div>
+                  <div className="text-xs text-white/50 mt-0.5">
+                    {nsfasDeadline ? `Deadline: ${nsfasDeadline}` : 'Check nsfas.org.za for current dates'} · nsfas.org.za
+                  </div>
                 </div>
               </div>
               <a
@@ -108,6 +115,9 @@ export default async function BursariesPage() {
       {/* Bursary grid */}
       <section className="py-12 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-xs text-slate-400 mb-6">
+            External links go to official provider websites. If a link appears broken, search the bursary name on the provider&apos;s site directly.
+          </div>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {bursaries.map((b) => {
               const style = categoryStyles[b.category ?? ''] ?? fallbackStyle
@@ -187,15 +197,22 @@ export default async function BursariesPage() {
                         ? `${days} days left!`
                         : fmt(b.deadline!)}
                     </div>
-                    {!closed && b.applicationUrl && (
-                      <a
-                        href={b.applicationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
-                      >
-                        Apply <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
+                    {!closed && (
+                      b.applicationUrl ? (
+                        <a
+                          href={b.applicationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
+                        >
+                          Apply <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      ) : (
+                        <span className="text-xs text-slate-400 italic flex items-center gap-1">
+                          <ExternalLink className="h-3 w-3" />
+                          Visit {b.provider}&apos;s website
+                        </span>
+                      )
                     )}
                   </div>
                 </div>

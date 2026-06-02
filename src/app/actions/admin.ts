@@ -42,6 +42,7 @@ export async function createBursary(formData: FormData) {
     },
   })
 
+  revalidatePath('/')
   revalidatePath('/bursaries')
   revalidatePath('/admin/bursaries')
   redirect('/admin/bursaries')
@@ -71,6 +72,7 @@ export async function updateBursary(id: string, formData: FormData) {
     },
   })
 
+  revalidatePath('/')
   revalidatePath('/bursaries')
   revalidatePath('/admin/bursaries')
   redirect('/admin/bursaries')
@@ -79,6 +81,7 @@ export async function updateBursary(id: string, formData: FormData) {
 export async function deleteBursary(id: string) {
   await requireAdmin()
   await prisma.bursary.delete({ where: { id } })
+  revalidatePath('/')
   revalidatePath('/bursaries')
   revalidatePath('/admin/bursaries')
 }
@@ -86,6 +89,7 @@ export async function deleteBursary(id: string) {
 export async function toggleBursaryActive(id: string, isActive: boolean) {
   await requireAdmin()
   await prisma.bursary.update({ where: { id }, data: { isActive } })
+  revalidatePath('/')
   revalidatePath('/bursaries')
   revalidatePath('/admin/bursaries')
 }
@@ -187,6 +191,7 @@ export async function createCareer(formData: FormData) {
     },
   })
 
+  revalidatePath('/')
   revalidatePath('/careers')
   revalidatePath('/admin/careers')
   redirect('/admin/careers')
@@ -213,6 +218,7 @@ export async function updateCareer(id: string, formData: FormData) {
     },
   })
 
+  revalidatePath('/')
   revalidatePath('/careers')
   revalidatePath('/admin/careers')
   redirect('/admin/careers')
@@ -221,6 +227,7 @@ export async function updateCareer(id: string, formData: FormData) {
 export async function deleteCareer(id: string) {
   await requireAdmin()
   await prisma.careerPath.delete({ where: { id } })
+  revalidatePath('/')
   revalidatePath('/careers')
   revalidatePath('/admin/careers')
 }

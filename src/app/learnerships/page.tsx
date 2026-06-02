@@ -5,7 +5,7 @@ import { prisma } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Learnerships 2025/2026: All SETA Learnerships South Africa',
+  title: 'Learnerships 2026/2027: All SETA Learnerships South Africa',
   description: 'Browse current learnerships in South Africa. Free training + monthly stipend. Updated regularly.',
 }
 
@@ -61,6 +61,13 @@ export default async function LearnershipPage() {
 
   const openCount = learnerships.filter((l) => l.status === 'OPEN').length
 
+  const mostRecent = learnerships.length > 0
+    ? learnerships.reduce((a, b) => a.updatedAt > b.updatedAt ? a : b).updatedAt
+    : null
+  const updatedLabel = mostRecent
+    ? mostRecent.toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' })
+    : '2026/2027 season'
+
   return (
     <>
       {/* Header */}
@@ -70,12 +77,12 @@ export default async function LearnershipPage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-brand mb-6">
               <Briefcase className="h-3.5 w-3.5" />
-              Updated June 2025 · {openCount} open learnerships
+              Updated {updatedLabel} · {openCount} open learnerships
             </div>
             <h1 className="text-5xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
               Learnerships
               <br />
-              <span className="gradient-text">2025/2026</span>
+              <span className="gradient-text">2026/2027</span>
             </h1>
             <p className="text-lg text-white/60 mb-8">
               Free SETA-funded training + a monthly stipend while you work toward
