@@ -27,8 +27,8 @@ const typeCfg: Record<string, { label: string; pill: string; accent: string; ico
 }
 
 const groups = [
-  { key: 'UNIVERSITY', title: 'Universities', sub: '26 public universities — NSFAS accredited' },
-  { key: 'TVET', title: 'TVET Colleges', sub: '50 public colleges — often free, NSFAS eligible' },
+  { key: 'UNIVERSITY', title: 'Universities', sub: '26 public universities, NSFAS accredited' },
+  { key: 'TVET', title: 'TVET Colleges', sub: '50 public colleges, often free, NSFAS eligible' },
   { key: 'PRIVATE_COLLEGE', title: 'Private Colleges & Distance', sub: 'Flexible options (NSFAS does not cover these)' },
 ]
 

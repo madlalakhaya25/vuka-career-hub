@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { Flame, Mail, MapPin, ArrowRight } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
+import { VukaMark } from '@/components/VukaMark'
+import { NewsletterForm } from '@/components/NewsletterForm'
 
 const footerLinks = {
   Pathways: [
@@ -42,19 +44,7 @@ export function Footer() {
               <h3 className="text-lg font-bold text-white">Stay updated on learnerships & bursaries</h3>
               <p className="text-sm text-white/40 mt-1">New opportunities every week. Free. Unsubscribe anytime.</p>
             </div>
-            <form className="flex gap-2 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 md:w-64 px-4 py-2.5 bg-white/8 border border-white/12 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-brand/50 focus:bg-white/10 transition-all"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2.5 gradient-orange text-white text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity flex items-center gap-1.5 whitespace-nowrap"
-              >
-                Subscribe <ArrowRight className="h-3.5 w-3.5" />
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
       </div>
@@ -65,16 +55,14 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <div className="w-8 h-8 gradient-orange rounded-xl flex items-center justify-center">
-                <Flame className="h-4 w-4 text-white" />
-              </div>
+              <VukaMark size={32} className="rounded-xl shrink-0" />
               <span className="font-bold text-lg text-white">
                 Vuka<span className="gradient-text">Career</span>Hub
               </span>
             </Link>
             <p className="text-sm text-white/40 leading-relaxed mb-6 max-w-xs">
-              Free guides to help you figure out what to do after matric —
-              learnerships, bursaries, universities, and careers, all in one place.
+              Free guides for what to do after matric. Learnerships, bursaries,
+              universities, and careers, all in one place.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs text-white/40">

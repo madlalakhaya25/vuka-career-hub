@@ -3,7 +3,7 @@ import { Zap } from 'lucide-react'
 import { CareerQuizClient } from './CareerQuizClient'
 
 export const metadata: Metadata = {
-  title: 'Career Quiz — Discover Your Ideal Career Path',
+  title: 'Career Quiz: Discover Your Ideal Career Path',
   description: 'Answer 10 questions about your interests and strengths to find your ideal career in South Africa.',
 }
 

@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
@@ -8,6 +7,7 @@ import { authConfig } from '../auth.config'
 
 const ADMIN_EMAILS = new Set([
   'madlalakhaya@yahoo.com',
+  'madlalakhaya@outlook.com',
   'madlalakhaya@gmail.com',
   'khaya@botlhale.ai',
 ])
@@ -19,7 +19,7 @@ const loginSchema = z.object({
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   ...authConfig,
-  adapter: PrismaAdapter(prisma),
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {

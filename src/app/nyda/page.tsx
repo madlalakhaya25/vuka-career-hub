@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Rocket, DollarSign, BookOpen, Phone, Globe, CheckCircle, ArrowRight, Star, Building2, TrendingUp, ExternalLink, Zap } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'NYDA — National Youth Development Agency Guide 2025',
+  title: 'NYDA: National Youth Development Agency Guide 2025',
   description: 'Complete NYDA guide. R2.5 billion youth fund, grants up to R200K (R250K for agriculture & tech), low-interest loans. Ages 18–35.',
 }
 
@@ -23,7 +23,7 @@ const products = [
     title: 'NYDA Business Loan',
     amount: 'Below-prime interest rate',
     amountSub: 'Contact NYDA for current rate',
-    desc: 'Low-interest business loan for youth entrepreneurs. Offered at a concessionary rate below the commercial prime rate — contact NYDA directly for the current figure.',
+    desc: 'Low-interest business loan for youth entrepreneurs. Offered at a concessionary rate below the commercial prime rate. Contact NYDA directly for the current figure.',
     eligibility: ['Age 18–35', 'South African citizen', 'Viable business plan', 'Ability to repay'],
     includes: ['Below-prime interest', 'Flexible repayment terms', 'Business advisory services', 'Progress monitoring'],
     url: 'https://www.nyda.gov.za',
@@ -45,7 +45,7 @@ const products = [
     title: 'R2.5 Billion Youth Fund',
     amount: 'R750K – R2,000,000',
     amountSub: 'Launched 31 October 2025',
-    desc: "Launched 31 October 2025 — the largest fund NYDA has ever announced. Focused on agriculture, solar energy, manufacturing, and property development. Grants up to R250,000 for qualifying agri and tech projects.",
+    desc: "Launched 31 October 2025, the largest fund NYDA has ever announced. Focused on agriculture, solar energy, manufacturing, and property development. Grants up to R250,000 for qualifying agri and tech projects.",
     eligibility: ['Age 18–35', 'SA citizen', 'Business in priority sectors', 'Strong business plan'],
     includes: ['Large-scale capital', 'Business development support', 'Sector mentorship', 'Job creation focus'],
     url: 'https://www.nyda.gov.za',
@@ -55,7 +55,7 @@ const products = [
 ]
 
 const programmes = [
-  { name: 'Website Dev & Digital Marketing', partner: 'Accenture + Moses Kotane Institute', status: 'Open 2025', desc: 'Free digital skills training — learn to build websites, run online ads, write a CV, and prepare for interviews.' },
+  { name: 'Website Dev & Digital Marketing', partner: 'Accenture + Moses Kotane Institute', status: 'Open 2025', desc: 'Free digital skills training. Learn to build websites, run online ads, write a CV, and prepare for interviews.' },
   { name: 'Data Analytics Training', partner: 'NYDA Digital Skills Unit', status: 'Open 2025', desc: 'Learn data analytics, Excel, and business intelligence tools aligned with current job market.' },
   { name: 'National Youth Service (NYS)', partner: 'Government', status: 'Expanding 2025/26', desc: 'Community service programme expanding to 40,000 participants. Stipend + skills development included.' },
   { name: 'Creative Economy Programme', partner: 'Various partners', status: 'Rolling', desc: 'Support for youth in music, film, events, and design. Includes business development support.' },
@@ -80,7 +80,7 @@ export default function NYDAPage() {
               </h1>
               <p className="text-lg text-white/60 mb-8">
                 Most people aged 18–35 have no idea what NYDA actually offers. Grants you
-                don&apos;t pay back, low-interest loans, free training, and now a R2.5 billion fund — all for young South Africans.
+                don&apos;t pay back, low-interest loans, free training, and now a R2.5 billion fund, all for young South Africans.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a

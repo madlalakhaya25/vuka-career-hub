@@ -133,7 +133,7 @@ function Field({ label, name, defaultValue, required, placeholder, type = 'text'
       <input
         type={type}
         name={name}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue ?? undefined}
         required={required}
         placeholder={placeholder}
         className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"

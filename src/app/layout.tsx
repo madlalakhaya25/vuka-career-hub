@@ -19,7 +19,7 @@ export const viewport = {
 export const metadata: Metadata = {
   title: {
     template: '%s | Vuka Career Hub',
-    default: 'Vuka Career Hub — Your Post-Matric Guide',
+    default: 'Vuka Career Hub: Your Post-Matric Guide',
   },
   description:
     "Free guides on TVET colleges, universities, learnerships, bursaries, and careers in South Africa. Everything you need after matric, in one place.",

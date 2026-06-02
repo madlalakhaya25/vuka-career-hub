@@ -41,7 +41,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             >
               <item.icon className="h-4 w-4 shrink-0" />
               <span className="flex-1">{item.label}</span>
-              {'badge' in item && item.badge > 0 && (
+              {'badge' in item && (item.badge ?? 0) > 0 && (
                 <span className="bg-orange-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
                   {item.badge}
                 </span>

@@ -114,7 +114,7 @@ export default function HomePage() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs font-semibold text-white/80 mb-8">
                 <Flame className="h-3.5 w-3.5 text-brand" />
-                2025/2026 Updated — Free for every South African student
+                2025/2026 Updated, free for every South African student
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
               </div>
 
@@ -129,7 +129,7 @@ export default function HomePage() {
               {/* Subline */}
               <p className="mt-6 text-lg text-white/60 leading-relaxed max-w-lg">
                 Free guides on TVET colleges, universities, learnerships, bursaries
-                and the most in-demand careers in South Africa — all in one place.
+                and the most in-demand careers in South Africa, all in one place.
               </p>
 
               {/* CTAs */}
@@ -233,7 +233,7 @@ export default function HomePage() {
               <span className="gradient-text">Only your choice.</span>
             </h2>
             <p className="mt-4 text-lg text-slate-500 max-w-xl mx-auto">
-              University, TVET, learnership, or private college — each has real
+              University, TVET, learnership, or private college. Each has real
               advantages. Compare them and decide what fits your life.
             </p>
           </div>
@@ -347,7 +347,7 @@ export default function HomePage() {
             <div>
               <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 rounded-full px-4 py-1.5 text-xs font-semibold text-red-600 mb-4">
                 <TrendingUp className="h-3.5 w-3.5" />
-                Skills shortage — South Africa 2025/26
+                Skills shortage in South Africa 2025/26
               </div>
               <h2 className="text-4xl sm:text-5xl font-extrabold text-dark tracking-tight">
                 Most in-demand
@@ -355,7 +355,7 @@ export default function HomePage() {
                 <span className="gradient-text">careers right now</span>
               </h2>
               <p className="mt-3 text-slate-500 max-w-lg">
-                Employers are competing to hire these people — and paying serious money for them.
+                Employers are competing to hire these people and paying serious money for them.
               </p>
             </div>
             <Link

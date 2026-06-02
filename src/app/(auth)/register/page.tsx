@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Flame, CheckCircle } from 'lucide-react'
+import { CheckCircle } from 'lucide-react'
 import { RegisterForm } from './RegisterForm'
+import { VukaMark } from '@/components/VukaMark'
 
-export const metadata: Metadata = {
-  title: 'Create Account — Free',
-}
+export const metadata: Metadata = { title: 'Create Account for Free' }
 
 export default function RegisterPage() {
   return (
@@ -13,16 +12,12 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 font-bold text-2xl text-slate-900">
-            <Flame className="h-7 w-7 text-orange-500" />
-            <span>
-              Vuka<span className="text-orange-500">Career</span>Hub
-            </span>
+            <VukaMark size={32} className="rounded-xl shrink-0" />
+            <span>Vuka<span className="text-orange-500">Career</span>Hub</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 mt-6">Create your free account</h1>
           <p className="text-slate-500 mt-1">Save learnerships, track bursary deadlines</p>
         </div>
-
-        {/* Benefits */}
         <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6">
           <div className="space-y-2">
             {[
@@ -38,7 +33,6 @@ export default function RegisterPage() {
             ))}
           </div>
         </div>
-
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
           <RegisterForm />
           <p className="text-center text-sm text-slate-500 mt-6">

@@ -149,26 +149,26 @@ export function InboxClient({ items, sources }: Props) {
                     <tr key={`${item.id}-detail`}>
                       <td colSpan={5} className="bg-slate-50 px-5 py-4 border-b border-slate-200">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
-                          {data.seta && <Detail label="SETA" value={String(data.seta)} />}
-                          {data.sector && <Detail label="Sector" value={String(data.sector)} />}
-                          {data.nqfLevel && <Detail label="NQF Level" value={String(data.nqfLevel)} />}
-                          {(data.stipendMin || data.stipendMax) && (
+                          {!!data.seta && <Detail label="SETA" value={String(data.seta)} />}
+                          {!!data.sector && <Detail label="Sector" value={String(data.sector)} />}
+                          {!!data.nqfLevel && <Detail label="NQF Level" value={String(data.nqfLevel)} />}
+                          {!!(data.stipendMin || data.stipendMax) && (
                             <Detail
                               label="Stipend"
                               value={`R${Number(data.stipendMin ?? 0).toLocaleString()}–R${Number(data.stipendMax ?? 0).toLocaleString()}/mo`}
                             />
                           )}
-                          {data.deadline && <Detail label="Deadline" value={String(data.deadline)} />}
-                          {data.durationMonths && <Detail label="Duration" value={`${data.durationMonths} months`} />}
+                          {!!data.deadline && <Detail label="Deadline" value={String(data.deadline)} />}
+                          {!!data.durationMonths && <Detail label="Duration" value={`${data.durationMonths} months`} />}
                           {data.isNational !== undefined && <Detail label="Coverage" value={data.isNational ? 'National' : String((data.provinces as string[] | undefined)?.join(', ') ?? '')} />}
                         </div>
-                        {data.description && (
+                        {!!data.description && (
                           <p className="text-xs text-slate-600 leading-relaxed mb-2">{String(data.description)}</p>
                         )}
-                        {data.requirements && (
+                        {!!data.requirements && (
                           <p className="text-xs text-slate-500 italic">Requirements: {String(data.requirements)}</p>
                         )}
-                        {data.applicationUrl && (
+                        {!!data.applicationUrl && (
                           <a href={String(data.applicationUrl)} target="_blank" rel="noopener noreferrer" className="text-xs text-orange-500 hover:underline mt-1 inline-block">
                             {String(data.applicationUrl)}
                           </a>
