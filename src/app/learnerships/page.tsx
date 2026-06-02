@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Clock, MapPin, DollarSign, CheckCircle, ArrowRight, Briefcase, BookOpen, Building2 } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Learnerships 2025/2026 — All SETA Learnerships South Africa',
   description: 'Browse current learnerships in South Africa. Free training + monthly stipend. Updated regularly.',

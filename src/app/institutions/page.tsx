@@ -3,6 +3,8 @@ import { GraduationCap, CheckCircle } from 'lucide-react'
 import { prisma } from '@/lib/db'
 import { InstitutionsGrid } from './InstitutionsGrid'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Institutions — TVET Colleges, Universities & Private Colleges SA',
   description: 'Browse all 50 TVET colleges, 26 public universities, and top private colleges in South Africa.',

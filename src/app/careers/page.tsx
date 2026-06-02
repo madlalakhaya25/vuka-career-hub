@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { TrendingUp, Flame, ChevronRight, AlertTriangle } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'In-Demand Careers South Africa 2025/2026 — Salary Guide',
   description: "South Africa's most in-demand careers with real salary data and qualification pathways.",

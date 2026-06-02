@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Clock, ExternalLink, CheckCircle, Star, DollarSign, GraduationCap } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Bursaries South Africa 2025/2026 — NSFAS, Corporate & Government',
   description: 'Find bursaries for South African students. NSFAS, Sasol, Anglo American, Eskom and more.',
