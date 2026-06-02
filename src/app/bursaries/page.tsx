@@ -72,9 +72,11 @@ export default async function BursariesPage() {
               <div className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shrink-0" />
                 <div>
-                  <div className="text-sm font-bold text-white">NSFAS 2026: Applications open</div>
+                  <div className="text-sm font-bold text-white">
+                    {nsfasDeadline ? 'NSFAS: Applications open' : 'NSFAS 2027: Dates not yet announced'}
+                  </div>
                   <div className="text-xs text-white/50 mt-0.5">
-                    {nsfasDeadline ? `Deadline: ${nsfasDeadline}` : 'Check nsfas.org.za for current dates'} · nsfas.org.za
+                    {nsfasDeadline ? `Deadline: ${nsfasDeadline}` : 'Expected Sep–Oct 2026 — monitor my.nsfas.org.za'} · nsfas.org.za
                   </div>
                 </div>
               </div>
