@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/db'
 import Link from 'next/link'
 import { GraduationCap, Briefcase, TrendingUp, Plus } from 'lucide-react'
+import { DigestButton } from './DigestButton'
 
 export default async function AdminDashboard() {
   const [bursaryCount, learnershipCount, careerCount] = await Promise.all([
@@ -29,9 +30,16 @@ export default async function AdminDashboard() {
 
   return (
     <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-        <p className="text-slate-500 mt-1">Manage all content on Vuka Career Hub.</p>
+      <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+          <p className="text-slate-500 mt-1">Manage all content on Vuka Career Hub.</p>
+        </div>
+        <div className="bg-white border border-slate-200 rounded-xl px-5 py-4">
+          <p className="text-xs font-semibold text-slate-500 mb-2">Weekly content digest</p>
+          <DigestButton />
+          <p className="text-xs text-slate-400 mt-2">Also runs automatically every Monday 8am</p>
+        </div>
       </div>
 
       {/* Stats */}

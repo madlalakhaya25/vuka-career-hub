@@ -4,6 +4,7 @@ import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
+import { runWeeklyDigest } from '@/lib/digest'
 
 function slugify(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
@@ -347,4 +348,17 @@ export async function rejectAllScrapedListings(source?: string) {
     data: { status: 'REJECTED', reviewedAt: new Date() },
   })
   revalidatePath('/admin/inbox')
+}
+
+
+// ─── Digest ────────────────────────────────────────────────────────────────────
+
+export async function sendDigestAction(): Promise<{ ok: boolean; urgent: number; expired: number; newFound: number; error?: string }> {
+  await requireAdmin()
+  try {
+    const result = await runWeeklyDigest()
+    return { ok: true, ...result }
+  } catch (err) {
+    return { ok: false, urgent: 0, expired: 0, newFound: 0, error: err instanceof Error ? err.message : 'Unknown error' }
+  }
 }
