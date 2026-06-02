@@ -2,15 +2,27 @@
 
 import { useActionState } from 'react'
 import { signInAction } from '@/app/actions/auth'
+import Link from 'next/link'
 import { ArrowRight, Loader2 } from 'lucide-react'
 
 const initialState = { error: '' }
 
-export function LoginForm() {
+export function LoginForm({ registered, reset }: { registered?: boolean; reset?: boolean }) {
   const [state, action, isPending] = useActionState(signInAction, initialState)
 
   return (
     <form action={action} className="space-y-4">
+      {registered && (
+        <div className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+          Account created! Sign in below.
+        </div>
+      )}
+      {reset && (
+        <div className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+          Password updated! Sign in with your new password.
+        </div>
+      )}
+
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
           Email address
@@ -26,9 +38,14 @@ export function LoginForm() {
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1.5">
-          Password
-        </label>
+        <div className="flex items-center justify-between mb-1.5">
+          <label htmlFor="password" className="block text-sm font-medium text-slate-700">
+            Password
+          </label>
+          <Link href="/forgot-password" className="text-xs text-orange-500 hover:text-orange-600">
+            Forgot password?
+          </Link>
+        </div>
         <input
           id="password"
           name="password"
@@ -54,9 +71,7 @@ export function LoginForm() {
         {isPending ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
-          <>
-            Sign in <ArrowRight className="h-4 w-4" />
-          </>
+          <>Sign in <ArrowRight className="h-4 w-4" /></>
         )}
       </button>
     </form>

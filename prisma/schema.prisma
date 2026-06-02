@@ -259,3 +259,13 @@ enum ScrapeStatus {
   APPROVED
   REJECTED
 }
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique @default(cuid())
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
