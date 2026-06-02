@@ -3,7 +3,7 @@ import { Calculator } from 'lucide-react'
 import { APSCalculatorClient } from './APSCalculatorClient'
 
 export const metadata: Metadata = {
-  title: 'APS Score Calculator — Find Which Courses You Qualify For',
+  title: 'APS Score Calculator: Find Which Courses You Qualify For',
   description: 'Enter your matric marks to calculate your APS score and see which SA university programmes you qualify for.',
 }
 
@@ -22,7 +22,7 @@ export default function APSCalculatorPage() {
           </h1>
           <p className="text-lg text-white/60">
             Enter your matric subject marks to instantly calculate your Admission Point
-            Score — and see which university programmes you qualify for.
+            Score and see which university programmes you qualify for.
           </p>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-50 to-transparent" />

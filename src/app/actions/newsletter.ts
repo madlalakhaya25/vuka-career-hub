@@ -37,7 +37,7 @@ export async function subscribeNewsletter(
           <div style="background:#fff;padding:32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 16px 16px">
             <p style="font-size:16px;line-height:1.6">Hi there,</p>
             <p style="font-size:16px;line-height:1.6">
-              Thanks for subscribing to <strong>Vuka Career Hub</strong>. We'll send you updates on new learnerships, bursaries, and opportunities — straight to your inbox, every week.
+              Thanks for subscribing to <strong>Vuka Career Hub</strong>. We'll send you updates on new learnerships, bursaries, and opportunities, straight to your inbox every week.
             </p>
             <p style="font-size:16px;line-height:1.6">In the meantime, explore what's available:</p>
             <div style="margin:24px 0;display:flex;gap:12px;flex-wrap:wrap">

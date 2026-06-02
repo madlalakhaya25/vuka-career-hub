@@ -6,7 +6,7 @@ import { InstitutionsGrid } from './InstitutionsGrid'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Institutions — TVET Colleges, Universities & Private Colleges SA',
+  title: 'Institutions: TVET Colleges, Universities & Private Colleges SA',
   description: 'Browse all 50 TVET colleges, 26 public universities, and top private colleges in South Africa.',
 }
 
@@ -53,7 +53,7 @@ export default async function InstitutionsPage() {
               <CheckCircle className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
               <div className="text-sm text-white/70">
                 <strong className="text-white">NSFAS note:</strong> Only covers study at public universities
-                and public TVET colleges — not private colleges. Look for the green NSFAS badge.
+                and public TVET colleges, not private colleges. Look for the green NSFAS badge.
               </div>
             </div>
           </div>

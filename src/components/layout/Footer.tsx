@@ -61,8 +61,8 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-white/40 leading-relaxed mb-6 max-w-xs">
-              Free guides to help you figure out what to do after matric —
-              learnerships, bursaries, universities, and careers, all in one place.
+              Free guides for what to do after matric. Learnerships, bursaries,
+              universities, and careers, all in one place.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs text-white/40">

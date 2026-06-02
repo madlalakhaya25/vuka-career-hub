@@ -5,7 +5,7 @@ import { prisma } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Bursaries South Africa 2025/2026 — NSFAS, Corporate & Government',
+  title: 'Bursaries South Africa 2025/2026: NSFAS, Corporate & Government',
   description: 'Find bursaries for South African students. NSFAS, Sasol, Anglo American, Eskom and more.',
 }
 
@@ -51,7 +51,7 @@ export default async function BursariesPage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-green-400 mb-6">
               <GraduationCap className="h-3.5 w-3.5" />
-              {bursaries.length} bursaries listed — updated for 2025/2026
+              {bursaries.length} bursaries listed, updated for 2025/2026
             </div>
             <h1 className="text-5xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
               Bursaries &<br />
@@ -67,7 +67,7 @@ export default async function BursariesPage() {
               <div className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shrink-0" />
                 <div>
-                  <div className="text-sm font-bold text-white">NSFAS 2026 — Applications open</div>
+                  <div className="text-sm font-bold text-white">NSFAS 2026: Applications open</div>
                   <div className="text-xs text-white/50 mt-0.5">17 Sep – 15 Nov 2025 · nsfas.org.za</div>
                 </div>
               </div>

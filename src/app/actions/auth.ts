@@ -130,7 +130,7 @@ export async function forgotPasswordAction(
           <div style="background:#fff;padding:32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 16px 16px">
             <p style="font-size:15px;line-height:1.6">Hi ${user.name ?? 'there'},</p>
             <p style="font-size:15px;line-height:1.6">
-              We received a request to reset your Vuka Career Hub password. Click the button below — this link expires in <strong>1 hour</strong>.
+              We received a request to reset your Vuka Career Hub password. Click the button below to set a new one. This link expires in <strong>1 hour</strong>.
             </p>
             <div style="text-align:center;margin:28px 0">
               <a href="${resetUrl}" style="display:inline-block;background:#fb923c;color:white;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px">

@@ -201,7 +201,7 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
               >
                 <Zap className="h-4 w-4" />
-                Get Started — Free
+                Get Started Free
               </Link>
               <Link
                 href="/login"

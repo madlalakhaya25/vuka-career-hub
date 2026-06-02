@@ -157,7 +157,7 @@ export function APSCalculatorClient() {
                         />
                         {hasValue && (
                           <span className={`text-xs font-medium ${mark >= 50 ? 'text-green-600' : 'text-red-600'}`}>
-                            {mark}% — {markToGrade(mark)}
+                            {mark}% · {markToGrade(mark)}
                           </span>
                         )}
                       </div>
@@ -178,9 +178,9 @@ export function APSCalculatorClient() {
                   <div className="text-sm text-orange-700 font-medium mb-1">Your APS Score</div>
                   <div className="text-5xl font-extrabold text-orange-500">{aps}</div>
                   <div className="text-sm text-orange-600 mt-1">
-                    {aps >= 40 ? 'Excellent — qualifies for most programmes' :
-                     aps >= 32 ? 'Good — qualifies for many programmes' :
-                     aps >= 24 ? 'Fair — qualifies for several programmes' :
+                    {aps >= 40 ? 'Excellent, qualifies for most programmes' :
+                     aps >= 32 ? 'Good, qualifies for many programmes' :
+                     aps >= 24 ? 'Fair, qualifies for several programmes' :
                      'Consider TVET or bridging programmes'}
                   </div>
                 </div>
@@ -266,7 +266,7 @@ export function APSCalculatorClient() {
                   <div className="text-right shrink-0">
                     {programme.isTvet ? (
                       <span className="text-xs bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full font-semibold">
-                        TVET — no min APS
+                        TVET: no min APS
                       </span>
                     ) : (
                       <span className="text-xs bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-semibold">
@@ -287,7 +287,7 @@ export function APSCalculatorClient() {
                     APS is one factor. Universities also consider specific subject
                     requirements (e.g. Math for engineering), additional tests, and
                     available space. Always apply directly to your chosen institutions.
-                    This calculator uses standard APS — some universities have their own
+                    This calculator uses standard APS. Some universities have their own
                     calculation methods.
                   </p>
                 </div>

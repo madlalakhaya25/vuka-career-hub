@@ -4,7 +4,7 @@ import { CheckCircle } from 'lucide-react'
 import { RegisterForm } from './RegisterForm'
 import { VukaMark } from '@/components/VukaMark'
 
-export const metadata: Metadata = { title: 'Create Account — Free' }
+export const metadata: Metadata = { title: 'Create Account for Free' }
 
 export default function RegisterPage() {
   return (
