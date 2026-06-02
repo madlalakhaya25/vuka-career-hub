@@ -7,6 +7,7 @@ import { authConfig } from '../auth.config'
 
 const ADMIN_EMAILS = new Set([
   'madlalakhaya@yahoo.com',
+  'madlalakhaya@outlook.com',
   'madlalakhaya@gmail.com',
   'khaya@botlhale.ai',
 ])
