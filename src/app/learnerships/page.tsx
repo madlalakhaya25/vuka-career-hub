@@ -112,8 +112,8 @@ export default async function LearnershipPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { n: '01', t: 'Apply online', d: 'Send your ID, matric cert, and CV to the SETA or employer listed.' },
-              { n: '02', t: 'Work + study', d: 'Split your time between a workplace and a training provider or TVET college.' },
+              { n: '01', t: 'Find a position', d: 'Search job boards like Indeed SA or PNet for the learnership title. Employers post openings — not the SETA directly.' },
+              { n: '02', t: 'Work + study', d: 'Once placed, split your time between an employer\'s workplace and a training provider or TVET college.' },
               { n: '03', t: 'Graduate', d: 'Complete assessments to earn your SAQA-registered National Certificate.' },
             ].map((step) => (
               <div key={step.n} className="flex gap-4">
@@ -217,28 +217,33 @@ export default async function LearnershipPage() {
                         </div>
                       )}
 
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-2">
                         <div className={`flex items-center gap-1.5 text-xs font-semibold ${urgent ? 'text-red-600' : 'text-slate-500'}`}>
                           {urgent && <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />}
                           <Clock className="h-3.5 w-3.5" />
                           {days === null ? 'Rolling' : urgent ? `${days} days left!` : fmt(l.deadline!)}
                         </div>
-                        {(() => {
-                          const url = l.applicationUrl ?? (l.seta ? setaUrls[l.seta] : null)
-                          return url ? (
+                        <div className="flex items-center gap-2 shrink-0">
+                          <a
+                            href={`https://za.indeed.com/jobs?q=${encodeURIComponent(l.title)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group/btn flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
+                          >
+                            Find Openings
+                            <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                          </a>
+                          {(l.applicationUrl ?? (l.seta ? setaUrls[l.seta] : null)) && (
                             <a
-                              href={url}
+                              href={(l.applicationUrl ?? (l.seta ? setaUrls[l.seta] : null))!}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="group/btn flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
+                              className="text-xs text-slate-400 hover:text-orange-500 transition-colors whitespace-nowrap"
                             >
-                              Apply Now
-                              <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                              {l.seta ?? 'SETA'} site
                             </a>
-                          ) : (
-                            <span className="text-xs text-slate-400 italic">Check SETA website</span>
-                          )
-                        })()}
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -255,17 +260,20 @@ export default async function LearnershipPage() {
           <h2 className="text-2xl font-extrabold text-dark mb-6">Browse by SETA</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {setas.map((s) => (
-              <div
+              <a
                 key={s.name}
-                className="group bg-white rounded-2xl border border-slate-200 p-5 card-hover cursor-pointer"
+                href={`https://za.indeed.com/jobs?q=${encodeURIComponent(s.sector + ' learnership')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-white rounded-2xl border border-slate-200 p-5 card-hover"
               >
                 <div className="text-3xl mb-3">{s.icon}</div>
                 <div className="font-bold text-dark text-sm group-hover:text-orange-500 transition-colors">
                   {s.name}
                 </div>
                 <div className="text-xs text-slate-400 mt-0.5">{s.sector}</div>
-                <div className="mt-2 text-xs font-semibold text-orange-500">{s.count}+ learnerships</div>
-              </div>
+                <div className="mt-2 text-xs font-semibold text-orange-500">Search openings</div>
+              </a>
             ))}
           </div>
         </div>
