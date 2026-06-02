@@ -47,27 +47,28 @@ export default async function AdminDashboard() {
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
         {sections.map((s) => (
-          <Link
+          <div
             key={s.label}
-            href={s.href}
-            className="bg-white rounded-xl border border-slate-200 p-5 hover:border-orange-300 hover:shadow-sm transition-all group"
+            className="relative bg-white rounded-xl border border-slate-200 hover:border-orange-300 hover:shadow-sm transition-all group overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className={`w-10 h-10 ${s.color} rounded-xl flex items-center justify-center`}>
-                <s.icon className="h-5 w-5" />
+            <Link href={s.href} className="absolute inset-0 z-0" aria-label={s.label} />
+            <div className="relative z-10 p-5 pointer-events-none">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`w-10 h-10 ${s.color} rounded-xl flex items-center justify-center`}>
+                  <s.icon className="h-5 w-5" />
+                </div>
+                <Link
+                  href={`${s.href}/new`}
+                  className="pointer-events-auto flex items-center gap-1 text-xs font-semibold text-orange-500 hover:text-orange-700"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  Add
+                </Link>
               </div>
-              <Link
-                href={`${s.href}/new`}
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 text-xs font-semibold text-orange-500 hover:text-orange-700"
-              >
-                <Plus className="h-3.5 w-3.5" />
-                Add
-              </Link>
+              <div className="text-3xl font-extrabold text-slate-900">{s.count}</div>
+              <div className="text-sm text-slate-500 mt-0.5">{s.label}</div>
             </div>
-            <div className="text-3xl font-extrabold text-slate-900">{s.count}</div>
-            <div className="text-sm text-slate-500 mt-0.5">{s.label}</div>
-          </Link>
+          </div>
         ))}
       </div>
 
