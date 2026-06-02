@@ -24,6 +24,12 @@ export const authConfig = {
       if (isProtected && !isLoggedIn) return false
       return true
     },
+    session({ session, token }) {
+      if (session.user) {
+        ;(session.user as { isAdmin?: boolean }).isAdmin = token.isAdmin as boolean
+      }
+      return session
+    },
   },
   providers: [],
 } satisfies NextAuthConfig
