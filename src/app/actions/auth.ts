@@ -1,6 +1,6 @@
 'use server'
 
-import { signIn } from '@/lib/auth'
+import { signIn, signOut } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { Resend } from 'resend'
 import { z } from 'zod'
@@ -187,4 +187,8 @@ export async function resetPasswordAction(
   await prisma.passwordResetToken.delete({ where: { token } })
 
   redirect('/login?reset=1')
+}
+
+export async function signOutAction() {
+  await signOut({ redirectTo: '/' })
 }

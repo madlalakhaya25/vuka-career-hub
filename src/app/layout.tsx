@@ -3,6 +3,7 @@ import { Geist } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { auth } from '@/lib/auth'
 
 const geist = Geist({
   variable: '--font-geist-sans',
@@ -35,11 +36,20 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const session = await auth()
+  const user = session?.user
+    ? {
+        name: session.user.name,
+        email: session.user.email,
+        isAdmin: (session.user as { isAdmin?: boolean }).isAdmin ?? false,
+      }
+    : undefined
+
   return (
     <html lang="en-ZA" className={`${geist.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased bg-white overflow-x-hidden">
-        <Navbar />
+        <Navbar user={user} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

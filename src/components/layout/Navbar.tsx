@@ -2,8 +2,15 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, X, ChevronDown, Zap } from 'lucide-react'
+import { Menu, X, ChevronDown, Zap, LayoutDashboard, LogOut } from 'lucide-react'
 import { VukaMark } from '@/components/VukaMark'
+import { signOutAction } from '@/app/actions/auth'
+
+type NavUser = {
+  name?: string | null
+  email?: string | null
+  isAdmin?: boolean
+}
 
 const navLinks = [
   {
@@ -30,7 +37,7 @@ const navLinks = [
   },
 ]
 
-export function Navbar() {
+export function Navbar({ user }: { user?: NavUser }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
@@ -112,19 +119,50 @@ export function Navbar() {
 
             {/* Right actions */}
             <div className="hidden md:flex items-center gap-2">
-              <Link
-                href="/login"
-                className="px-4 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/register"
-                className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold gradient-orange text-white rounded-xl hover:opacity-90 transition-opacity glow-orange-sm"
-              >
-                <Zap className="h-3.5 w-3.5" />
-                Get Started
-              </Link>
+              {user ? (
+                <>
+                  {user.isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="px-3 py-1.5 text-xs font-bold text-orange-400 border border-orange-400/30 rounded-lg hover:bg-orange-400/10 transition-colors"
+                    >
+                      Admin
+                    </Link>
+                  )}
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
+                  >
+                    <LayoutDashboard className="h-3.5 w-3.5" />
+                    {user.name?.split(' ')[0] ?? 'Dashboard'}
+                  </Link>
+                  <form action={signOutAction}>
+                    <button
+                      type="submit"
+                      className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white/70 hover:text-white border border-white/15 rounded-xl hover:bg-white/6 transition-all"
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      Sign out
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="px-4 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold gradient-orange text-white rounded-xl hover:opacity-90 transition-opacity glow-orange-sm"
+                  >
+                    <Zap className="h-3.5 w-3.5" />
+                    Get Started
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Mobile toggle */}
@@ -195,21 +233,54 @@ export function Navbar() {
             ))}
 
             <div className="px-4 mt-6 space-y-3 border-t border-white/10 pt-5">
-              <Link
-                href="/register"
-                className="flex items-center justify-center gap-2 w-full py-3 gradient-orange text-white font-semibold rounded-xl text-sm"
-                onClick={() => setMobileOpen(false)}
-              >
-                <Zap className="h-4 w-4" />
-                Get Started Free
-              </Link>
-              <Link
-                href="/login"
-                className="flex items-center justify-center w-full py-3 border border-white/15 text-white/70 font-medium rounded-xl text-sm hover:bg-white/6 transition-all"
-                onClick={() => setMobileOpen(false)}
-              >
-                Sign in
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center justify-center gap-2 w-full py-3 gradient-orange text-white font-semibold rounded-xl text-sm"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    My Dashboard
+                  </Link>
+                  {user.isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="flex items-center justify-center w-full py-3 border border-orange-400/30 text-orange-400 font-semibold rounded-xl text-sm hover:bg-orange-400/10 transition-all"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
+                  <form action={signOutAction}>
+                    <button
+                      type="submit"
+                      className="flex items-center justify-center gap-2 w-full py-3 border border-white/15 text-white/70 font-medium rounded-xl text-sm hover:bg-white/6 transition-all"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign out
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/register"
+                    className="flex items-center justify-center gap-2 w-full py-3 gradient-orange text-white font-semibold rounded-xl text-sm"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <Zap className="h-4 w-4" />
+                    Get Started Free
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="flex items-center justify-center w-full py-3 border border-white/15 text-white/70 font-medium rounded-xl text-sm hover:bg-white/6 transition-all"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Sign in
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
