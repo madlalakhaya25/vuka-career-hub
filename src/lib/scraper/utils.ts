@@ -1,10 +1,15 @@
-// Fetch with a polite delay and user-agent so we don't hammer servers
+const BROWSER_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+
+// Fetch with a polite delay. Uses a browser UA so sites with basic bot detection
+// don't return 403. Note: Cloudflare-protected sites still block cloud/DC IPs —
+// run `npm run scrape` locally (not from Vercel) for those sources.
 export async function politeGet(url: string, delayMs = 1500): Promise<string> {
   await new Promise((r) => setTimeout(r, delayMs))
   const res = await fetch(url, {
     headers: {
-      'User-Agent': 'Vuka Career Hub bot — educational data aggregator (za)',
-      'Accept': 'text/html,application/xhtml+xml',
+      'User-Agent': BROWSER_UA,
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'en-ZA,en;q=0.9',
     },
     signal: AbortSignal.timeout(15_000),
   })

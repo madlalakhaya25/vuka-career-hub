@@ -4,6 +4,8 @@ import { scrapeGovpageLearnerships, scrapeGovpageBursaries } from './sources/gov
 import { scrapeMersetaLearnerships } from './sources/merseta'
 import { scrapeMictLearnerships } from './sources/mict'
 import { scrapeNsfasStatus } from './sources/nsfas'
+import { scrapeSaYouthLearnerships, scrapeSaYouthBursaries } from './sources/sa-youth'
+import { scrapeGraduates24Learnerships } from './sources/graduates24'
 
 const SOURCES = [
   scrapeGovpageLearnerships,
@@ -11,6 +13,10 @@ const SOURCES = [
   scrapeMersetaLearnerships,
   scrapeMictLearnerships,
   scrapeNsfasStatus,
+  // Aggregator sites — require local run (Cloudflare blocks cloud IPs)
+  scrapeSaYouthLearnerships,
+  scrapeSaYouthBursaries,
+  scrapeGraduates24Learnerships,
 ]
 
 export type RunReport = {
