@@ -33,7 +33,7 @@ function parseListingPage($: ReturnType<typeof cheerio.load>, sourceUrl: string)
     const provinces = parseProvinces(fullText)
     const seta = parseSeta(fullText)
 
-    const providerMatch = fullText.match(/(?:company|employer|provider|by)[:\s]+([A-Z][^\n,]{3,40})/i)
+    const providerMatch = fullText.match(/(?:company|employer|provider)[:\s]+([A-Z][^\n,]{3,40})/i)
 
     items.push({
       externalId: itemUrl,

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Clock, MapPin, DollarSign, CheckCircle, ArrowRight, Briefcase, BookOpen, Building2 } from 'lucide-react'
+import { Clock, MapPin, DollarSign, CheckCircle, ArrowRight, Briefcase, BookOpen, Building2, ExternalLink } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
@@ -23,6 +23,20 @@ const setaUrls: Record<string, string> = {
   'CHIETA': 'https://www.chieta.org.za/learnerships',
 }
 
+const setaSiteUrls: Record<string, string> = {
+  'MICT SETA': 'https://www.mict.org.za',
+  'MERSETA': 'https://www.merseta.org.za',
+  'Services SETA': 'https://www.serviceseta.org.za',
+  'HWSETA': 'https://www.hwseta.org.za',
+  'EWSETA': 'https://www.ewseta.org.za',
+  'FASSET': 'https://www.fasset.org.za',
+  'CETA': 'https://www.ceta.org.za',
+  'AgriSETA': 'https://www.agriseta.co.za',
+  'W&RSETA': 'https://www.wrseta.org.za',
+  'TETA': 'https://www.teta.org.za',
+  'CHIETA': 'https://www.chieta.org.za',
+}
+
 const sectorStyles: Record<string, { accentColor: string; borderColor: string }> = {
   'Information Technology': { accentColor: 'from-blue-500/20 to-blue-600/5', borderColor: 'border-blue-500/20' },
   'Engineering': { accentColor: 'from-amber-500/20 to-amber-600/5', borderColor: 'border-amber-500/20' },
@@ -36,14 +50,14 @@ const sectorStyles: Record<string, { accentColor: string; borderColor: string }>
 const fallbackStyle = { accentColor: 'from-slate-500/20 to-slate-600/5', borderColor: 'border-slate-500/20' }
 
 const setas = [
-  { name: 'MICT SETA', sector: 'IT & Communications', icon: '💻', count: 45 },
-  { name: 'MERSETA', sector: 'Manufacturing & Engineering', icon: '⚙️', count: 62 },
-  { name: 'Services SETA', sector: 'Business & Finance', icon: '🏢', count: 38 },
-  { name: 'HWSETA', sector: 'Healthcare', icon: '🏥', count: 29 },
-  { name: 'EWSETA', sector: 'Energy & Water', icon: '⚡', count: 18 },
-  { name: 'CETA', sector: 'Construction', icon: '🏗️', count: 31 },
-  { name: 'AgriSETA', sector: 'Agriculture', icon: '🌾', count: 24 },
-  { name: 'FASSET', sector: 'Finance', icon: '💰', count: 22 },
+  { name: 'MICT SETA', sector: 'IT & Communications', icon: '💻' },
+  { name: 'MERSETA', sector: 'Manufacturing & Engineering', icon: '⚙️' },
+  { name: 'Services SETA', sector: 'Business & Finance', icon: '🏢' },
+  { name: 'HWSETA', sector: 'Healthcare', icon: '🏥' },
+  { name: 'EWSETA', sector: 'Energy & Water', icon: '⚡' },
+  { name: 'CETA', sector: 'Construction', icon: '🏗️' },
+  { name: 'AgriSETA', sector: 'Agriculture', icon: '🌾' },
+  { name: 'FASSET', sector: 'Finance', icon: '💰' },
 ]
 
 function daysUntil(d: Date) {
@@ -112,7 +126,7 @@ export default async function LearnershipPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { n: '01', t: 'Find a position', d: 'Search job boards like Indeed SA or PNet for the learnership title. Employers post openings — not the SETA directly.' },
+              { n: '01', t: 'Find a position', d: 'Browse listings below and click Apply Now to go directly to the employer or SETA posting. New openings are added weekly.' },
               { n: '02', t: 'Work + study', d: 'Once placed, split your time between an employer\'s workplace and a training provider or TVET college.' },
               { n: '03', t: 'Graduate', d: 'Complete assessments to earn your SAQA-registered National Certificate.' },
             ].map((step) => (
@@ -223,27 +237,17 @@ export default async function LearnershipPage() {
                           <Clock className="h-3.5 w-3.5" />
                           {days === null ? 'Rolling' : urgent ? `${days} days left!` : fmt(l.deadline!)}
                         </div>
-                        <div className="flex items-center gap-2 shrink-0">
+                        {l.applicationUrl && (
                           <a
-                            href={`https://za.indeed.com/jobs?q=${encodeURIComponent(l.title)}`}
+                            href={l.applicationUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group/btn flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm"
+                            className="group/btn flex items-center gap-1.5 px-4 py-2 gradient-orange text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all glow-orange-sm shrink-0"
                           >
-                            Find Openings
-                            <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                            Apply Now
+                            <ExternalLink className="h-3.5 w-3.5" />
                           </a>
-                          {(l.applicationUrl ?? (l.seta ? setaUrls[l.seta] : null)) && (
-                            <a
-                              href={(l.applicationUrl ?? (l.seta ? setaUrls[l.seta] : null))!}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs text-slate-400 hover:text-orange-500 transition-colors whitespace-nowrap"
-                            >
-                              {l.seta ?? 'SETA'} site
-                            </a>
-                          )}
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -262,7 +266,7 @@ export default async function LearnershipPage() {
             {setas.map((s) => (
               <a
                 key={s.name}
-                href={`https://za.indeed.com/jobs?q=${encodeURIComponent(s.sector + ' learnership')}`}
+                href={setaUrls[s.name] ?? setaSiteUrls[s.name] ?? '#'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group bg-white rounded-2xl border border-slate-200 p-5 card-hover"
@@ -272,7 +276,7 @@ export default async function LearnershipPage() {
                   {s.name}
                 </div>
                 <div className="text-xs text-slate-400 mt-0.5">{s.sector}</div>
-                <div className="mt-2 text-xs font-semibold text-orange-500">Search openings</div>
+                <div className="mt-2 text-xs font-semibold text-orange-500">View learnerships ↗</div>
               </a>
             ))}
           </div>
