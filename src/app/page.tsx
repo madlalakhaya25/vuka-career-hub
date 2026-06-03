@@ -181,7 +181,7 @@ export default async function HomePage() {
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">🚀</span>
                   <div>
-                    <div className="text-xs font-bold text-brand uppercase tracking-wider mb-0.5">NEW 2025</div>
+                    <div className="text-xs font-bold text-brand uppercase tracking-wider mb-0.5">R2.5B FUND</div>
                     <div className="text-sm font-bold text-white">NYDA R2.5B Youth Fund</div>
                     <div className="text-xs text-white/50 mt-0.5">Up to R2M for ages 18–35</div>
                   </div>

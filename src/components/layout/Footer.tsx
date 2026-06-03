@@ -120,11 +120,9 @@ export function Footer() {
             © {new Date().getFullYear()} Vuka Career Hub. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            {['Privacy Policy', 'Terms of Service', 'Contact'].map((l) => (
-              <Link key={l} href="/" className="text-xs text-white/25 hover:text-white/50 transition-colors">
-                {l}
-              </Link>
-            ))}
+            <Link href="/privacy" className="text-xs text-white/25 hover:text-white/50 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-xs text-white/25 hover:text-white/50 transition-colors">Terms of Service</Link>
+            <a href="mailto:hello@vukacareerhub.co.za" className="text-xs text-white/25 hover:text-white/50 transition-colors">Contact</a>
           </div>
         </div>
       </div>

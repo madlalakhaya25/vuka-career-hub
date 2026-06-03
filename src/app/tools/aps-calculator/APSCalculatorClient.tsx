@@ -16,7 +16,7 @@ const subjects = [
 ]
 
 const programmes = [
-  { name: 'Medicine (MBChB)', institution: 'UCT / Wits / UP / UKZN', minAps: 42, fields: ['healthcare'] },
+  { name: 'Medicine (MBChB)', institution: 'UCT / Wits / UP / UKZN', minAps: 38, fields: ['healthcare'] },
   { name: 'BSc Computer Science', institution: 'UCT / Wits / UP', minAps: 36, fields: ['it'] },
   { name: 'BCom Accounting', institution: 'Most universities', minAps: 32, fields: ['finance'] },
   { name: 'BEng Electrical Engineering', institution: 'Wits / UP / UCT / TUT', minAps: 34, fields: ['engineering'] },
@@ -27,7 +27,7 @@ const programmes = [
   { name: 'Diploma IT (NQF 6)', institution: 'TUT / DUT / CPUT', minAps: 20, fields: ['it'] },
   { name: 'Diploma Business Management', institution: 'TUT / DUT / VUT', minAps: 18, fields: ['business'] },
   { name: 'BEng Civil Engineering', institution: 'Wits / UP / UCT', minAps: 34, fields: ['engineering'] },
-  { name: 'BCom Law', institution: 'UNISA / UP / Wits', minAps: 32, fields: ['law'] },
+  { name: 'BCom Law', institution: 'UNISA / UP / NWU', minAps: 32, fields: ['law'] },
   { name: 'BA Psychology', institution: 'Multiple universities', minAps: 26, fields: ['social'] },
   { name: 'BSc Agriculture', institution: 'UP / Stellenbosch / UFS', minAps: 22, fields: ['agriculture'] },
   { name: 'Diploma Electrical Engineering (N4–N6)', institution: 'Any TVET college', minAps: 0, fields: ['engineering'], isTvet: true },
@@ -47,14 +47,12 @@ function markToAps(mark: number): number {
 }
 
 function markToGrade(mark: number): string {
-  if (mark >= 90) return 'Distinction'
-  if (mark >= 80) return 'Merit'
-  if (mark >= 70) return 'Credit'
-  if (mark >= 60) return 'Pass'
-  if (mark >= 50) return 'Pass'
+  if (mark >= 80) return 'Distinction'
+  if (mark >= 70) return 'Merit'
+  if (mark >= 60) return 'Achieved'
   if (mark >= 40) return 'Pass'
-  if (mark >= 30) return 'Fail'
-  return 'Fail'
+  if (mark >= 30) return 'Elementary'
+  return 'Not Achieved'
 }
 
 type Marks = Record<string, string>

@@ -48,7 +48,7 @@ export default async function DashboardPage() {
               icon: Bell,
               title: 'Set Reminders',
               desc: 'Never miss a bursary deadline',
-              href: '/dashboard/alerts',
+              href: '/bursaries',
               color: 'text-blue-500',
               bg: 'bg-blue-50',
             },
