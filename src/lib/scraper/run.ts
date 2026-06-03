@@ -5,18 +5,35 @@ import { scrapeMersetaLearnerships } from './sources/merseta'
 import { scrapeMictLearnerships } from './sources/mict'
 import { scrapeNsfasStatus } from './sources/nsfas'
 import { scrapeSaYouthLearnerships, scrapeSaYouthBursaries } from './sources/sa-youth'
-import { scrapeGraduates24Learnerships } from './sources/graduates24'
+import {
+  scrapeGraduates24Learnerships,
+  scrapeGraduates24Internships,
+  scrapeGraduates24GradProgrammes,
+  scrapeGraduates24Bursaries,
+  scrapeGraduates24Funding,
+  scrapeGraduates24Universities,
+  scrapeGraduates24Businesses,
+} from './sources/graduates24'
+import { scrapeDpsaCirculars } from './sources/dpsa'
 
 const SOURCES = [
+  // Official SETA / government sites — work from cloud IPs
   scrapeGovpageLearnerships,
   scrapeGovpageBursaries,
   scrapeMersetaLearnerships,
   scrapeMictLearnerships,
   scrapeNsfasStatus,
-  // Aggregator sites — require local run (Cloudflare blocks cloud IPs)
+  scrapeDpsaCirculars,
+  // Aggregator sites — behind Cloudflare, require local run (`npm run scrape`)
   scrapeSaYouthLearnerships,
   scrapeSaYouthBursaries,
   scrapeGraduates24Learnerships,
+  scrapeGraduates24Internships,
+  scrapeGraduates24GradProgrammes,
+  scrapeGraduates24Bursaries,
+  scrapeGraduates24Funding,
+  scrapeGraduates24Universities,
+  scrapeGraduates24Businesses,
 ]
 
 export type RunReport = {

@@ -5,6 +5,7 @@ import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { runWeeklyDigest } from '@/lib/digest'
+import { runScraper } from '@/lib/scraper/run'
 
 function slugify(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
@@ -360,5 +361,26 @@ export async function sendDigestAction(): Promise<{ ok: boolean; urgent: number;
     return { ok: true, ...result }
   } catch (err) {
     return { ok: false, urgent: 0, expired: 0, newFound: 0, error: err instanceof Error ? err.message : 'Unknown error' }
+  }
+}
+
+// ─── Scraper ───────────────────────────────────────────────────────────────────
+
+export async function runScraperAction(): Promise<{
+  ok: boolean
+  newListings: number
+  sources: number
+  errors: number
+  error?: string
+}> {
+  await requireAdmin()
+  try {
+    const report = await runScraper()
+    const newListings = report.reduce((s, r) => s + r.saved, 0)
+    const errors = report.filter((r) => r.error).length
+    revalidatePath('/admin/inbox')
+    return { ok: true, newListings, sources: report.length, errors }
+  } catch (err) {
+    return { ok: false, newListings: 0, sources: 0, errors: 1, error: err instanceof Error ? err.message : 'Unknown error' }
   }
 }

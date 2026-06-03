@@ -2,6 +2,7 @@ import { prisma } from '@/lib/db'
 import Link from 'next/link'
 import { GraduationCap, Briefcase, TrendingUp, Plus } from 'lucide-react'
 import { DigestButton } from './DigestButton'
+import { ScraperButton } from './ScraperButton'
 
 export default async function AdminDashboard() {
   const [bursaryCount, learnershipCount, careerCount] = await Promise.all([
@@ -35,13 +36,25 @@ export default async function AdminDashboard() {
         <p className="text-slate-500 mt-1">Manage all content on Vuka Career Hub.</p>
       </div>
 
-      {/* Weekly digest */}
-      <div className="bg-orange-50 border border-orange-200 rounded-xl px-5 py-4 mb-8 flex items-center justify-between gap-4 flex-wrap">
-        <div>
-          <p className="text-sm font-bold text-slate-800">Weekly Content Digest</p>
-          <p className="text-xs text-slate-500 mt-0.5">Emails you expired deadlines, urgent closings, and new opportunities from job boards. Runs automatically every Monday 8am.</p>
+      {/* Actions row */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-8">
+        {/* Weekly digest */}
+        <div className="bg-orange-50 border border-orange-200 rounded-xl px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <p className="text-sm font-bold text-slate-800">Weekly Content Digest</p>
+            <p className="text-xs text-slate-500 mt-0.5">Emails expired deadlines, urgent closings, and new opportunities. Runs automatically every Monday 8am.</p>
+          </div>
+          <DigestButton />
         </div>
-        <DigestButton />
+
+        {/* Scraper */}
+        <div className="bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <p className="text-sm font-bold text-slate-800">Fetch New Listings</p>
+            <p className="text-xs text-slate-500 mt-0.5">Scrapes sa-youth.org.za, graduates24.com, DPSA, govpage, MERSETA, MICT and NSFAS. New items land in Inbox for review.</p>
+          </div>
+          <ScraperButton />
+        </div>
       </div>
 
       {/* Stats */}
