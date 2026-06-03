@@ -3,6 +3,12 @@ import Link from 'next/link'
 import { Plus, Pencil } from 'lucide-react'
 import { deleteLearnership } from '@/app/actions/admin'
 
+async function handleDelete(formData: FormData) {
+  'use server'
+  const id = formData.get('id') as string
+  await deleteLearnership(id)
+}
+
 export default async function AdminLearnershipPage() {
   const learnerships = await prisma.learnership.findMany({
     orderBy: [{ status: 'asc' }, { deadline: 'asc' }],
@@ -82,7 +88,8 @@ export default async function AdminLearnershipPage() {
                         <Pencil className="h-3.5 w-3.5" />
                         Edit
                       </Link>
-                      <form action={async () => { 'use server'; await deleteLearnership(l.id) }}>
+                      <form action={handleDelete}>
+                        <input type="hidden" name="id" value={l.id} />
                         <button type="submit" className="text-xs text-slate-400 hover:text-red-500 font-medium">
                           Delete
                         </button>

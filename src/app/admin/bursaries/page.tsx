@@ -3,6 +3,19 @@ import Link from 'next/link'
 import { Plus, Pencil } from 'lucide-react'
 import { deleteBursary, toggleBursaryActive } from '@/app/actions/admin'
 
+async function handleToggle(formData: FormData) {
+  'use server'
+  const id = formData.get('id') as string
+  const isActive = formData.get('isActive') === 'true'
+  await toggleBursaryActive(id, !isActive)
+}
+
+async function handleDelete(formData: FormData) {
+  'use server'
+  const id = formData.get('id') as string
+  await deleteBursary(id)
+}
+
 export default async function AdminBursariesPage() {
   const bursaries = await prisma.bursary.findMany({
     orderBy: [{ featured: 'desc' }, { name: 'asc' }],
@@ -62,12 +75,9 @@ export default async function AdminBursariesPage() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    <form
-                      action={async () => {
-                        'use server'
-                        await toggleBursaryActive(b.id, !b.isActive)
-                      }}
-                    >
+                    <form action={handleToggle}>
+                      <input type="hidden" name="id" value={b.id} />
+                      <input type="hidden" name="isActive" value={b.isActive.toString()} />
                       <button
                         type="submit"
                         className={`text-xs px-2.5 py-1 rounded-full font-medium border cursor-pointer ${
@@ -89,12 +99,8 @@ export default async function AdminBursariesPage() {
                         <Pencil className="h-3.5 w-3.5" />
                         Edit
                       </Link>
-                      <form
-                        action={async () => {
-                          'use server'
-                          await deleteBursary(b.id)
-                        }}
-                      >
+                      <form action={handleDelete}>
+                        <input type="hidden" name="id" value={b.id} />
                         <button
                           type="submit"
                           className="text-xs text-slate-400 hover:text-red-500 font-medium"

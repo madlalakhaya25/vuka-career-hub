@@ -10,6 +10,12 @@ const demandColors: Record<string, string> = {
   LOW: 'bg-slate-100 text-slate-500',
 }
 
+async function handleDelete(formData: FormData) {
+  'use server'
+  const id = formData.get('id') as string
+  await deleteCareer(id)
+}
+
 export default async function AdminCareersPage() {
   const careers = await prisma.careerPath.findMany({
     orderBy: [{ demandLevel: 'asc' }, { title: 'asc' }],
@@ -74,7 +80,8 @@ export default async function AdminCareersPage() {
                       <Pencil className="h-3.5 w-3.5" />
                       Edit
                     </Link>
-                    <form action={async () => { 'use server'; await deleteCareer(c.id) }}>
+                    <form action={handleDelete}>
+                      <input type="hidden" name="id" value={c.id} />
                       <button type="submit" className="text-xs text-slate-400 hover:text-red-500 font-medium">
                         Delete
                       </button>
