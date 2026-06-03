@@ -98,7 +98,6 @@ export default async function AdminBursariesPage() {
                         <button
                           type="submit"
                           className="text-xs text-slate-400 hover:text-red-500 font-medium"
-                          onClick={() => {}}
                         >
                           Delete
                         </button>
