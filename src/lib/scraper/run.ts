@@ -15,15 +15,19 @@ import {
   scrapeGraduates24Businesses,
 } from './sources/graduates24'
 import { scrapeDpsaCirculars } from './sources/dpsa'
+import { scrapeSetaCareersLearnerships, scrapeSetaCareersBursaries } from './sources/setacareers'
 
 const SOURCES = [
   // Official SETA / government sites — work from cloud IPs
-  scrapeGovpageLearnerships,
-  scrapeGovpageBursaries,
   scrapeMersetaLearnerships,
   scrapeMictLearnerships,
   scrapeNsfasStatus,
   scrapeDpsaCirculars,
+  // SA aggregators — may be blocked from cloud IPs, best run locally
+  scrapeGovpageLearnerships,
+  scrapeGovpageBursaries,
+  scrapeSetaCareersLearnerships,
+  scrapeSetaCareersBursaries,
   // Aggregator sites — behind Cloudflare, require local run (`npm run scrape`)
   scrapeSaYouthLearnerships,
   scrapeSaYouthBursaries,
