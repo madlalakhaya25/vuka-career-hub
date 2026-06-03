@@ -6,7 +6,7 @@ import { prisma } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'In-Demand Careers South Africa 2025/2026 | Salary Guide',
+  title: 'In-Demand Careers South Africa 2026/2027 | Salary Guide',
   description: "South Africa's most in-demand careers with real salary data and qualification pathways.",
 }
 
@@ -29,14 +29,43 @@ const demandCfg: Record<string, { label: string; cls: string; dot: string; ring:
   LOW: { label: 'Low demand', cls: 'bg-slate-50 text-slate-500 border-slate-200', dot: 'bg-slate-400', ring: 'ring-slate-50' },
 }
 
+// Maps filter chip key → Prisma sector string (partial match)
+const filterSectorMap: Record<string, string> = {
+  it: 'Information Technology',
+  trades: 'Trades',
+  healthcare: 'Healthcare',
+  finance: 'Finance',
+  energy: 'Energy',
+  marketing: 'Marketing',
+  engineering: 'Engineering',
+}
+
+const filterChips = [
+  { key: 'all', label: 'All' },
+  { key: 'it', label: 'IT & Tech' },
+  { key: 'trades', label: 'Trades' },
+  { key: 'healthcare', label: 'Healthcare' },
+  { key: 'finance', label: 'Finance' },
+  { key: 'energy', label: 'Energy' },
+  { key: 'marketing', label: 'Marketing' },
+]
+
 function fmt(n: number) { return `R${n.toLocaleString()}` }
 
-export default async function CareersPage() {
+export default async function CareersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sector?: string }>
+}) {
+  const { sector } = await searchParams
+  const activeSector = sector && filterSectorMap[sector] ? filterSectorMap[sector] : null
+
   const careers = await prisma.careerPath.findMany({
+    where: activeSector ? { sector: { contains: activeSector } } : undefined,
     orderBy: [{ demandLevel: 'asc' }, { title: 'asc' }],
   })
 
-  const criticalCount = careers.filter((c) => c.demandLevel === 'CRITICAL').length
+  const criticalCount = await prisma.careerPath.count({ where: { demandLevel: 'CRITICAL' } })
 
   return (
     <>
@@ -52,10 +81,10 @@ export default async function CareersPage() {
             <h1 className="text-5xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
               Most in-demand
               <br />
-              <span className="gradient-text">careers 2025/26</span>
+              <span className="gradient-text">careers 2026/27</span>
             </h1>
             <p className="text-lg text-white/60">
-              Real salary data and qualification pathways from the DHET 2024 National
+              Real salary data and qualification pathways from the DHET National
               List of Occupations in High Demand. Employers are actively competing to hire.
             </p>
           </div>
@@ -86,108 +115,103 @@ export default async function CareersPage() {
       <section className="py-14 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="filter-chips mb-8">
-            {['All', 'IT & Tech', 'Trades', 'Healthcare', 'Finance', 'Energy', 'Marketing'].map((f) => (
-              <button
-                key={f}
-                className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                  f === 'All'
-                    ? 'gradient-orange text-white border-transparent'
-                    : 'border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600 bg-white'
-                }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {careers.map((c) => {
-              const d = demandCfg[c.demandLevel] ?? demandCfg.MODERATE
-              const accent = sectorAccent[c.sector] ?? fallbackAccent
+            {filterChips.map((f) => {
+              const isActive = f.key === 'all' ? !sector || sector === 'all' : sector === f.key
               return (
-                <div
-                  key={c.id}
-                  className="group bg-white rounded-2xl border border-slate-200 card-hover overflow-hidden"
+                <Link
+                  key={f.key}
+                  href={f.key === 'all' ? '/careers' : `/careers?sector=${f.key}`}
+                  className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                    isActive
+                      ? 'gradient-orange text-white border-transparent'
+                      : 'border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600 bg-white'
+                  }`}
                 >
-                  {/* Gradient accent */}
-                  <div className={`h-1 bg-gradient-to-r ${accent.from} ${accent.to}`} />
-
-                  <div className="p-6">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-12 h-12 ${accent.bg} rounded-2xl flex items-center justify-center text-2xl border border-slate-100`}>
-                          {c.icon ?? '💼'}
-                        </div>
-                        <div>
-                          <h3 className="font-extrabold text-dark text-base group-hover:text-orange-500 transition-colors leading-tight">
-                            {c.title}
-                          </h3>
-                          <p className="text-xs text-slate-400">{c.sector}</p>
-                        </div>
-                      </div>
-                      <div className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border ring-4 ${d.cls} ${d.ring}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${d.dot}`} />
-                        {d.label}
-                      </div>
-                    </div>
-
-                    {c.description && (
-                      <p className="text-sm text-slate-500 leading-relaxed mb-4">{c.description}</p>
-                    )}
-
-                    {/* Salary table */}
-                    {(c.salaryEntry || c.salaryMid || c.salarySenior) && (
-                      <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/60 rounded-2xl p-4 mb-4">
-                        <div className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-3">
-                          Monthly salary range
-                        </div>
-                        <div className="grid grid-cols-3 gap-1.5 text-center">
-                          {[
-                            { l: 'Entry', v: c.salaryEntry },
-                            { l: 'Mid-level', v: c.salaryMid },
-                            { l: 'Senior', v: c.salarySenior },
-                          ].map((row) => (
-                            <div key={row.l} className="bg-white rounded-xl py-2.5">
-                              <div className="text-sm font-extrabold text-dark">
-                                {row.v ? fmt(row.v) : '—'}
-                              </div>
-                              <div className="text-xs text-slate-400">{row.l}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Pathways */}
-                    {c.pathways.length > 0 && (
-                      <div className="mb-4">
-                        <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                          How to qualify
-                        </div>
-                        <div className="space-y-1">
-                          {c.pathways.map((p) => (
-                            <div key={p} className="flex items-start gap-2 text-xs text-slate-600">
-                              <span className="text-brand mt-0.5">→</span>
-                              {p}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Outlook */}
-                    {c.outlook && (
-                      <div className="flex items-center gap-2 text-xs text-green-700 bg-green-50 border border-green-200/60 rounded-xl px-3 py-2">
-                        <TrendingUp className="h-3.5 w-3.5 shrink-0" />
-                        {c.outlook}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  {f.label}
+                </Link>
               )
             })}
           </div>
+
+          {careers.length === 0 ? (
+            <div className="text-center py-24">
+              <div className="text-5xl mb-4">🔍</div>
+              <p className="font-semibold text-slate-700 text-lg">No careers found</p>
+              <p className="text-slate-400 text-sm mt-2 mb-6">Try a different filter or browse all careers.</p>
+              <Link href="/careers" className="inline-flex items-center gap-2 px-5 py-2.5 gradient-orange text-white font-semibold rounded-xl text-sm hover:opacity-90 transition-opacity">
+                View all careers
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {careers.map((c) => {
+                const d = demandCfg[c.demandLevel] ?? demandCfg.MODERATE
+                const accent = sectorAccent[c.sector] ?? fallbackAccent
+                return (
+                  <Link
+                    key={c.id}
+                    href={`/careers/${c.slug}`}
+                    className="group bg-white rounded-2xl border border-slate-200 card-hover overflow-hidden"
+                  >
+                    {/* Gradient accent */}
+                    <div className={`h-1 bg-gradient-to-r ${accent.from} ${accent.to}`} />
+
+                    <div className="p-6">
+                      {/* Header */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-12 h-12 ${accent.bg} rounded-2xl flex items-center justify-center text-2xl border border-slate-100`}>
+                            {c.icon ?? '💼'}
+                          </div>
+                          <div>
+                            <h3 className="font-extrabold text-dark text-base group-hover:text-orange-500 transition-colors leading-tight">
+                              {c.title}
+                            </h3>
+                            <p className="text-xs text-slate-400">{c.sector}</p>
+                          </div>
+                        </div>
+                        <div className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border ring-4 ${d.cls} ${d.ring}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${d.dot}`} />
+                          {d.label}
+                        </div>
+                      </div>
+
+                      {c.description && (
+                        <p className="text-sm text-slate-500 leading-relaxed mb-4 line-clamp-2">{c.description}</p>
+                      )}
+
+                      {/* Salary table */}
+                      {(c.salaryEntry || c.salaryMid || c.salarySenior) && (
+                        <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/60 rounded-2xl p-4 mb-4">
+                          <div className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-3">
+                            Monthly salary range
+                          </div>
+                          <div className="grid grid-cols-3 gap-1.5 text-center">
+                            {[
+                              { l: 'Entry', v: c.salaryEntry },
+                              { l: 'Mid-level', v: c.salaryMid },
+                              { l: 'Senior', v: c.salarySenior },
+                            ].map((row) => (
+                              <div key={row.l} className="bg-white rounded-xl py-2.5">
+                                <div className="text-sm font-extrabold text-dark">
+                                  {row.v ? fmt(row.v) : '—'}
+                                </div>
+                                <div className="text-xs text-slate-400">{row.l}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="flex items-center justify-end gap-1 text-xs font-semibold text-orange-500 group-hover:gap-2 transition-all">
+                        View pathway <ChevronRight className="h-3.5 w-3.5" />
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          )}
         </div>
       </section>
 

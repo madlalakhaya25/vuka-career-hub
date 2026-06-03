@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Clock, MapPin, DollarSign, CheckCircle, ArrowRight, Briefcase, BookOpen, Building2, ExternalLink } from 'lucide-react'
+import Link from 'next/link'
+import { Clock, MapPin, DollarSign, CheckCircle, Briefcase, BookOpen, Building2, ExternalLink } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
@@ -60,6 +61,23 @@ const setas = [
   { name: 'FASSET', sector: 'Finance', icon: '💰' },
 ]
 
+const learnershipFilterChips = [
+  { key: 'all', label: 'All' },
+  { key: 'it', label: 'IT' },
+  { key: 'engineering', label: 'Engineering' },
+  { key: 'healthcare', label: 'Healthcare' },
+  { key: 'finance', label: 'Finance' },
+  { key: 'energy', label: 'Energy' },
+]
+
+const learnershipSectorMap: Record<string, string> = {
+  it: 'Information Technology',
+  engineering: 'Engineering',
+  healthcare: 'Healthcare',
+  finance: 'Finance',
+  energy: 'Energy',
+}
+
 function daysUntil(d: Date) {
   return Math.ceil((d.getTime() - Date.now()) / 86400000)
 }
@@ -67,9 +85,19 @@ function fmt(d: Date) {
   return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-export default async function LearnershipPage() {
+export default async function LearnershipPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sector?: string }>
+}) {
+  const { sector } = await searchParams
+  const activeSector = sector && learnershipSectorMap[sector] ? learnershipSectorMap[sector] : null
+
   const learnerships = await prisma.learnership.findMany({
-    where: { status: { not: 'CLOSED' } },
+    where: {
+      status: { not: 'CLOSED' },
+      ...(activeSector ? { sector: { contains: activeSector } } : {}),
+    },
     orderBy: [{ status: 'asc' }, { deadline: 'asc' }],
   })
 
@@ -152,21 +180,35 @@ export default async function LearnershipPage() {
               {openCount} open right now
             </h2>
             <div className="filter-chips">
-              {['All', 'IT', 'Engineering', 'Healthcare', 'Finance', 'Energy'].map((f) => (
-                <button
-                  key={f}
-                  className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                    f === 'All'
-                      ? 'gradient-orange text-white border-transparent glow-orange-sm'
-                      : 'border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600'
-                  }`}
-                >
-                  {f}
-                </button>
-              ))}
+              {learnershipFilterChips.map((f) => {
+                const isActive = f.key === 'all' ? !sector || sector === 'all' : sector === f.key
+                return (
+                  <Link
+                    key={f.key}
+                    href={f.key === 'all' ? '/learnerships' : `/learnerships?sector=${f.key}`}
+                    className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                      isActive
+                        ? 'gradient-orange text-white border-transparent glow-orange-sm'
+                        : 'border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600 bg-white'
+                    }`}
+                  >
+                    {f.label}
+                  </Link>
+                )
+              })}
             </div>
           </div>
 
+          {learnerships.length === 0 && (
+            <div className="text-center py-24">
+              <div className="text-5xl mb-4">🔍</div>
+              <p className="font-semibold text-slate-700 text-lg">No learnerships found</p>
+              <p className="text-slate-400 text-sm mt-2 mb-6">Try a different filter or browse all learnerships.</p>
+              <Link href="/learnerships" className="inline-flex items-center gap-2 px-5 py-2.5 gradient-orange text-white font-semibold rounded-xl text-sm hover:opacity-90 transition-opacity">
+                View all learnerships
+              </Link>
+            </div>
+          )}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {learnerships.map((l) => {
               const style = sectorStyles[l.sector ?? ''] ?? fallbackStyle

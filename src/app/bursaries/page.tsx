@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Clock, ExternalLink, CheckCircle, Star, DollarSign, GraduationCap } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
@@ -33,12 +34,45 @@ const fallbackStyle = {
   tagCls: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
 }
 
+const filterChips = [
+  { key: 'all', label: 'All' },
+  { key: 'government', label: 'Government' },
+  { key: 'corporate', label: 'Corporate' },
+  { key: 'seta', label: 'SETA' },
+  { key: 'engineering', label: 'Engineering' },
+  { key: 'it', label: 'IT' },
+  { key: 'healthcare', label: 'Healthcare' },
+  { key: 'finance', label: 'Finance' },
+]
+
+const filterFieldMap: Record<string, string> = {
+  engineering: 'Engineering',
+  it: 'Information Technology',
+  healthcare: 'Healthcare',
+  finance: 'Finance',
+}
+
 function daysUntil(d: Date) { return Math.ceil((d.getTime() - Date.now()) / 86400000) }
 function fmt(d: Date) { return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' }) }
 
-export default async function BursariesPage() {
+export default async function BursariesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ filter?: string }>
+}) {
+  const { filter } = await searchParams
+  const activeFilter = filter && filter !== 'all' ? filter : null
+
+  const categoryFilter = activeFilter && ['government', 'corporate', 'seta'].includes(activeFilter)
+    ? activeFilter : null
+  const fieldFilter = activeFilter ? filterFieldMap[activeFilter] : null
+
   const bursaries = await prisma.bursary.findMany({
-    where: { isActive: true },
+    where: {
+      isActive: true,
+      ...(categoryFilter ? { category: categoryFilter } : {}),
+      ...(fieldFilter ? { fieldsOfStudy: { has: fieldFilter } } : {}),
+    },
     orderBy: [{ featured: 'desc' }, { name: 'asc' }],
   })
 
@@ -81,7 +115,7 @@ export default async function BursariesPage() {
                 </div>
               </div>
               <a
-                href="https://www.nsfas.org.za"
+                href="https://my.nsfas.org.za"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="shrink-0 flex items-center gap-1.5 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-xs font-bold rounded-xl transition-colors"
@@ -98,18 +132,22 @@ export default async function BursariesPage() {
       <section className="bg-slate-50 border-b border-slate-200 py-4 sticky top-16 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="filter-chips">
-            {['All', 'Government', 'Corporate', 'SETA', 'Engineering', 'IT', 'Healthcare', 'Finance'].map((f) => (
-              <button
-                key={f}
-                className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                  f === 'All'
-                    ? 'gradient-orange text-white border-transparent'
-                    : 'border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600 bg-white'
-                }`}
-              >
-                {f}
-              </button>
-            ))}
+            {filterChips.map((f) => {
+              const isActive = f.key === 'all' ? !filter || filter === 'all' : filter === f.key
+              return (
+                <Link
+                  key={f.key}
+                  href={f.key === 'all' ? '/bursaries' : `/bursaries?filter=${f.key}`}
+                  className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                    isActive
+                      ? 'gradient-orange text-white border-transparent'
+                      : 'border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600 bg-white'
+                  }`}
+                >
+                  {f.label}
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -120,6 +158,16 @@ export default async function BursariesPage() {
           <div className="text-xs text-slate-400 mb-6">
             External links go to official provider websites. If a link appears broken, search the bursary name on the provider&apos;s site directly.
           </div>
+          {bursaries.length === 0 ? (
+            <div className="text-center py-24">
+              <div className="text-5xl mb-4">🔍</div>
+              <p className="font-semibold text-slate-700 text-lg">No bursaries found</p>
+              <p className="text-slate-400 text-sm mt-2 mb-6">Try a different filter or browse all bursaries.</p>
+              <Link href="/bursaries" className="inline-flex items-center gap-2 px-5 py-2.5 gradient-orange text-white font-semibold rounded-xl text-sm hover:opacity-90 transition-opacity">
+                View all bursaries
+              </Link>
+            </div>
+          ) : null}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {bursaries.map((b) => {
               const style = categoryStyles[b.category ?? ''] ?? fallbackStyle

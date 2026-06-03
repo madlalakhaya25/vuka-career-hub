@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Rocket, DollarSign, BookOpen, Phone, Globe, CheckCircle, ArrowRight, Star, Building2, TrendingUp, ExternalLink, Zap } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'NYDA: National Youth Development Agency Guide 2025',
+  title: 'NYDA: National Youth Development Agency Guide 2026',
   description: 'Complete NYDA guide. R2.5 billion youth fund, grants up to R200K (R250K for agriculture & tech), low-interest loans. Ages 18–35.',
 }
 
@@ -50,14 +50,14 @@ const products = [
     includes: ['Large-scale capital', 'Business development support', 'Sector mentorship', 'Job creation focus'],
     url: 'https://www.nyda.gov.za',
     accent: 'from-purple-500/15 to-violet-500/5', border: 'border-purple-500/20', iconCls: 'bg-purple-500/15 text-purple-400',
-    badge: 'NEW 2025',
+    badge: 'R2.5B FUND',
   },
 ]
 
 const programmes = [
-  { name: 'Website Dev & Digital Marketing', partner: 'Accenture + Moses Kotane Institute', status: 'Open 2025', desc: 'Free digital skills training. Learn to build websites, run online ads, write a CV, and prepare for interviews.' },
-  { name: 'Data Analytics Training', partner: 'NYDA Digital Skills Unit', status: 'Open 2025', desc: 'Learn data analytics, Excel, and business intelligence tools aligned with current job market.' },
-  { name: 'National Youth Service (NYS)', partner: 'Government', status: 'Expanding 2025/26', desc: 'Community service programme expanding to 40,000 participants. Stipend + skills development included.' },
+  { name: 'Website Dev & Digital Marketing', partner: 'Accenture + Moses Kotane Institute', status: 'Open 2026', desc: 'Free digital skills training. Learn to build websites, run online ads, write a CV, and prepare for interviews.' },
+  { name: 'Data Analytics Training', partner: 'NYDA Digital Skills Unit', status: 'Open 2026', desc: 'Learn data analytics, Excel, and business intelligence tools aligned with current job market.' },
+  { name: 'National Youth Service (NYS)', partner: 'Government', status: 'Expanding 2026/27', desc: 'Community service programme expanding to 40,000 participants. Stipend + skills development included.' },
   { name: 'Creative Economy Programme', partner: 'Various partners', status: 'Rolling', desc: 'Support for youth in music, film, events, and design. Includes business development support.' },
 ]
 
