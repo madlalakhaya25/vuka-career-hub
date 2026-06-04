@@ -12,11 +12,11 @@ const footerLinks = {
     { label: 'Distance Learning', href: '/institutions?type=DISTANCE_LEARNING' },
   ],
   Funding: [
-    { label: 'NSFAS Guide', href: '/bursaries?type=nsfas' },
+    { label: 'NSFAS Guide', href: '/bursaries?filter=government' },
     { label: 'All Bursaries', href: '/bursaries' },
     { label: 'NYDA Funding', href: '/nyda' },
     { label: 'SETA Learnerships', href: '/learnerships' },
-    { label: 'Corporate Bursaries', href: '/bursaries?type=corporate' },
+    { label: 'Corporate Bursaries', href: '/bursaries?filter=corporate' },
   ],
   Tools: [
     { label: 'APS Calculator', href: '/tools/aps-calculator' },

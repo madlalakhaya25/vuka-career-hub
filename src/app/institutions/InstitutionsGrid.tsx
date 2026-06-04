@@ -52,8 +52,8 @@ function groupKey(filter: string): string | null {
   return null
 }
 
-export function InstitutionsGrid({ institutions }: { institutions: Institution[] }) {
-  const [activeFilter, setActiveFilter] = useState('All')
+export function InstitutionsGrid({ institutions, initialFilter = 'All' }: { institutions: Institution[]; initialFilter?: string }) {
+  const [activeFilter, setActiveFilter] = useState(initialFilter)
 
   const filtered = institutions.filter((i) => matchesFilter(i, activeFilter))
 

@@ -10,7 +10,22 @@ export const metadata: Metadata = {
   description: 'Browse all 50 TVET colleges, 26 public universities, and top private colleges in South Africa.',
 }
 
-export default async function InstitutionsPage() {
+const typeFilterMap: Record<string, string> = {
+  UNIVERSITY: 'University',
+  TVET: 'TVET',
+  PRIVATE_COLLEGE: 'Private College',
+  DISTANCE_LEARNING: 'Private College',
+  TRAINING_PROVIDER: 'Private College',
+}
+
+export default async function InstitutionsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string }>
+}) {
+  const { type } = await searchParams
+  const initialFilter = (type && typeFilterMap[type]) ? typeFilterMap[type] : 'All'
+
   const institutions = await prisma.institution.findMany({
     orderBy: [{ featured: 'desc' }, { name: 'asc' }],
     select: {
@@ -61,7 +76,7 @@ export default async function InstitutionsPage() {
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent" />
       </section>
 
-      <InstitutionsGrid institutions={institutions} />
+      <InstitutionsGrid institutions={institutions} initialFilter={initialFilter} />
     </>
   )
 }
